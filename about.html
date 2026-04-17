@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Ralwyn</title>
+  <meta name="description" content="Learn more about Ryan and Lisa, the founders of Ralwyn." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ralwyn home">Ralwyn</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="about.html" aria-current="page">About</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="eyebrow">About Ralwyn</p>
+        <h1 class="page-title">Experience, structure, and practical guidance.</h1>
+        <p class="lead">
+          Ralwyn is built around clarity, structure, and measurable progress, with a people-focused approach grounded in real-world experience.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container founder-layout">
+        <article class="bio-block">
+          <div class="bio-image placeholder-badge">Ryan Headshot</div>
+          <div class="bio-copy">
+            <p class="section-label">Founder</p>
+            <h2>Ryan</h2>
+            <p>
+              Ryan is a graduate of the Coles College of Business at Kennesaw State University. Coles College of Business is among the top 2% of business schools worldwide with AACSB accreditation in both business and accounting. He earned his BBA in Management and brings more than 15 years of operational accounting experience across multiple companies in the commercial real estate and construction industries. During that time, he developed strengths in leadership, operations, project coordination, problem-solving, and organizational strategy.
+            </p>
+          </div>
+        </article>
+
+        <article class="bio-block reverse">
+          <div class="bio-image placeholder-badge">Lisa Headshot</div>
+          <div class="bio-copy">
+            <p class="section-label">Founder</p>
+            <h2>Lisa, RN-C OB</h2>
+            <p>
+              Lisa is a registered nurse licensed in the state of Tennessee with 15 years of experience in Labor and Delivery, postpartum, and women’s services. She earned her Associate of Science in Nursing in May 2011 and her Bachelor of Science in Nursing in July 2015. She also holds the RN-C OB specialty credential, reflecting specialized knowledge in inpatient obstetric nursing. For the past five years, she has served as a Clinical Staff Leader, further developing her leadership and management experience. She also holds BLS, ACLS, and NRP certifications.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container narrow">
+        <p class="section-label">Approach</p>
+        <h2>Grounded, clear, and built to be useful.</h2>
+        <p>
+          Ryan and Lisa bring together experience in business operations, accounting, leadership, and healthcare to support clients with practical, experience-based guidance. Together, they offer a practical, people-focused perspective grounded in real-world experience.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-panel">
+        <div>
+          <p class="section-label">Next step</p>
+          <h2>Talk with Ralwyn.</h2>
+          <p>Use email to start the conversation and define the right next step.</p>
+        </div>
+        <div class="contact-card">
+          <p class="contact-label">Primary email</p>
+          <a class="contact-link" href="mailto:contact@ralwyn.com">contact@ralwyn.com</a>
+          <p class="contact-note">Independent advisory services only. Not financial, legal, or tax advice.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Ralwyn. All rights reserved.</p>
+      <p class="footer-note">Clarity. Structure. Measurable Progress.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
