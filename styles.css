@@ -1,16 +1,16 @@
 :root {
-  --bg: #0b1220;
-  --panel: #111a2b;
-  --panel-soft: #0f172a;
-  --text: #e5edf7;
-  --muted: #9fb0c7;
-  --line: #23324d;
-  --accent: #5b8cff;
-  --accent-soft: rgba(91, 140, 255, 0.14);
-  --white: #ffffff;
+  --bg: #000000;
+  --panel: #0f0f0f;
+  --panel-soft: #121212;
+  --text: #FFFFFF;
+  --muted: #D1D5DB;
+  --line: #2a2a2a;
+  --accent: #C9A75B;
+  --accent-soft: rgba(201, 167, 91, 0.14);
+  --white: #FFFFFF;
   --max: 1120px;
   --radius: 18px;
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
 }
 
 * {
@@ -24,7 +24,7 @@ html {
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, #08101d 0%, #0b1220 100%);
+  background: linear-gradient(180deg, #000000 0%, #080808 100%);
   color: var(--text);
   line-height: 1.6;
 }
@@ -54,8 +54,8 @@ a {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(14px);
-  background: rgba(8, 16, 29, 0.78);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .header-inner,
@@ -107,7 +107,7 @@ a {
 .site-nav a:hover,
 .site-nav a:focus-visible,
 .site-nav a[aria-current="page"] {
-  color: var(--white);
+  color: var(--accent);
 }
 
 .hero,
@@ -137,7 +137,7 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.78rem;
-  color: #8db0ff;
+  color: var(--accent);
   font-weight: 700;
 }
 
@@ -195,7 +195,7 @@ h3 {
 
 .button-primary {
   background: var(--accent);
-  color: var(--white);
+  color: #111111;
 }
 
 .button-secondary {
@@ -205,7 +205,7 @@ h3 {
 }
 
 .text-link {
-  color: #a8c0ff;
+  color: var(--accent);
 }
 
 .panel-card,
@@ -213,7 +213,7 @@ h3 {
 .contact-card,
 .profile-card,
 .service-panel {
-  background: linear-gradient(180deg, rgba(17, 26, 43, 0.96), rgba(11, 18, 32, 0.96));
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(9, 9, 9, 0.98));
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -233,7 +233,7 @@ h3 {
 }
 
 .section-alt {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.015);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
