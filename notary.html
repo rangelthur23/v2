@@ -10,6 +10,33 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .ack-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      background: linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(9, 9, 9, 0.98));
+      margin-top: 1rem;
+    }
+
+    .ack-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      color: var(--muted);
+    }
+
+    .ack-row input {
+      margin-top: 0.2rem;
+      accent-color: var(--accent);
+    }
+
+    .button[aria-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -35,7 +62,7 @@
           Ralwyn offers remote online notarization with a structured process, direct communication, and optional wet notarization of a digitally signed document for clients who need a physical notarized copy returned by overnight delivery.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="mailto:contact@ralwyn.com?subject=Notary%20Appointment%20Request">Request Appointment</a>
+          <a class="button button-primary" href="#book-now">Request Appointment</a>
           <a class="button button-secondary" href="#pricing">View Pricing</a>
         </div>
       </div>
@@ -61,7 +88,7 @@
           <p class="section-label">Premium add-on</p>
           <h2>Wet Notarization + Overnight Return</h2>
           <p>
-            For clients who need a physical notarized copy after a digital signing workflow, Ralwyn can wet notarize an eligible printed copy and return it by overnight shipment for an additional fee.
+            For clients who require a physical notarized copy following a digital workflow, Ralwyn may provide wet notarization of a printed document <strong>where permitted by applicable law and document requirements</strong>.
           </p>
           <ul class="plain-list">
             <li>Available only when document type and workflow are appropriate</li>
@@ -86,6 +113,11 @@
           <li>Additional handling fee: $35</li>
           <li>Overnight shipping and packaging: billed separately</li>
           <li>Rush processing: +$25–$50 if required</li>
+        </ul>
+        <h3>Operating Hours</h3>
+        <ul class="plain-list">
+          <li>Standard hours: Monday–Friday, 9:00 AM – 6:00 PM Eastern</li>
+          <li>After-hours: Any appointment before 9:00 AM, after 6:00 PM, or on weekends</li>
         </ul>
         <h3>Add-ons</h3>
         <ul class="plain-list">
@@ -114,6 +146,19 @@
 
     <section class="section section-alt">
       <div class="container narrow">
+        <p class="section-label">Client responsibility</p>
+        <h2>Document acceptance and compliance</h2>
+        <p>
+          Clients are responsible for confirming that their documents are eligible for remote notarization and, if requested, that a printed and wet notarized copy will be accepted by the receiving party.
+        </p>
+        <p>
+          Ralwyn provides notarization services in compliance with Tennessee law. Acceptance of notarized documents by third parties, institutions, agencies, or jurisdictions is outside the control of Ralwyn.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
         <p class="section-label">Appointment intake</p>
         <h2>What to include when requesting an appointment.</h2>
         <ul class="plain-list">
@@ -123,6 +168,8 @@
           <li>Document type and number of documents</li>
           <li>Whether you need wet notarization of a physically mailed copy</li>
           <li>Whether overnight return is required</li>
+          <li>Confirmation that your document is eligible for remote notarization</li>
+          <li>Confirmation that a printed and wet notarized copy, if requested, will be accepted by the receiving party</li>
           <li>Preferred date and time</li>
           <li>Urgency level</li>
           <li>Whether you need a witness</li>
@@ -130,18 +177,24 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="book-now">
       <div class="container contact-panel">
         <div>
           <p class="section-label">Book now</p>
           <h2>Request a remote notary appointment.</h2>
           <p>
-            Email your appointment request with your document type, location, preferred timing, and whether you need a wet notarized copy returned overnight. You will receive a follow-up with availability, pricing, and next steps.
+            Review the acknowledgment below before submitting your request. Once confirmed, the appointment request button will unlock.
           </p>
+          <div class="ack-box">
+            <label class="ack-row" for="notaryAck">
+              <input type="checkbox" id="notaryAck" />
+              <span>I confirm that my document is eligible for remote notarization and, if I request a printed and wet notarized copy, I have confirmed that this format will be accepted by the receiving party.</span>
+            </label>
+          </div>
         </div>
         <div class="contact-card">
           <p class="contact-label">Primary email</p>
-          <a class="contact-link" href="mailto:contact@ralwyn.com?subject=Notary%20Appointment%20Request">contact@ralwyn.com</a>
+          <a id="requestButton" class="contact-link button button-primary" aria-disabled="true" href="mailto:contact@ralwyn.com?subject=Notary%20Appointment%20Request">Request Appointment</a>
           <p class="contact-note">Remote Online Notary for Tennessee and Georgia, with optional physical document handling when appropriate.</p>
         </div>
       </div>
@@ -157,6 +210,15 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    const ack = document.getElementById('notaryAck');
+    const requestButton = document.getElementById('requestButton');
+    ack.addEventListener('change', function () {
+      if (ack.checked) {
+        requestButton.setAttribute('aria-disabled', 'false');
+      } else {
+        requestButton.setAttribute('aria-disabled', 'true');
+      }
+    });
   </script>
 </body>
 </html>
