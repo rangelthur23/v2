@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     .ack-box,
-    .form-shell {
+    .form-shell,
+    .summary-box {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1rem 1.1rem;
@@ -96,6 +97,32 @@
 
     .full-span {
       grid-column: 1 / -1;
+    }
+
+    .summary-box h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--muted);
+      padding: 0.22rem 0;
+    }
+
+    .summary-total {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .summary-alert {
+      margin-top: 0.75rem;
+      color: #f5c16c;
+      font-weight: 600;
     }
 
     @media (max-width: 860px) {
@@ -185,6 +212,7 @@
         <ul class="plain-list">
           <li>Standard hours: Monday–Friday, 8:00 AM – 5:00 PM Eastern</li>
           <li>After-hours: Any appointment before 8:00 AM, after 5:00 PM, or on weekends</li>
+          <li>Blackout hours: 9:00 PM – 6:00 AM Eastern every day. Requests in this window are not accepted.</li>
           <li>Appointment requests should be made in 15-minute increments such as 08:15, 13:30, or 20:45</li>
         </ul>
         <h3>Add-ons</h3>
@@ -276,7 +304,7 @@
                   <option value="">Select one</option>
                   <option value="Flexible">Flexible</option>
                   <option value="Within 24 hours">Within 24 hours</option>
-                  <option value="Same day (+$25-$50)">Same day (+$25-$50)</option>
+                  <option value="Same day (+$25)">Same day (+$25)</option>
                 </select>
               </div>
               <div class="form-field">
@@ -285,8 +313,8 @@
               </div>
               <div class="form-field">
                 <label for="preferred_time">Preferred time</label>
-                <input id="preferred_time" name="preferred_time" type="time" step="900" required />
-                <p class="field-meta">Use 15-minute increments only. Times are Eastern.</p>
+                <input id="preferred_time" name="preferred_time" type="time" step="900" min="06:00" max="20:45" required />
+                <p class="field-meta">Use 15-minute increments only. Times are Eastern. Blackout hours are 9:00 PM–6:00 AM.</p>
               </div>
               <div class="form-field">
                 <label for="outside_hours">Outside business hours?</label>
@@ -334,6 +362,19 @@
               </div>
             </div>
 
+            <div class="summary-box">
+              <h3>Estimated Pricing Summary</h3>
+              <div class="summary-line"><span>Base remote session</span><span id="summary-base">$50</span></div>
+              <div class="summary-line"><span>Same-day urgency</span><span id="summary-urgency">$0</span></div>
+              <div class="summary-line"><span>Outside business hours</span><span id="summary-hours">$0</span></div>
+              <div class="summary-line"><span>Weekend appointment</span><span id="summary-weekend">$0</span></div>
+              <div class="summary-line"><span>Wet mailed copy</span><span id="summary-wet">$0</span></div>
+              <div class="summary-line"><span>Witness fee</span><span id="summary-witness">$0</span></div>
+              <div class="summary-line"><span>Overnight shipping</span><span id="summary-overnight">Billed separately</span></div>
+              <div class="summary-line summary-total"><span>Estimated total before shipping</span><span id="summary-total">$50</span></div>
+              <p id="summary-alert" class="summary-alert" hidden></p>
+            </div>
+
             <div class="ack-box">
               <label class="ack-row" for="notaryAck">
                 <input type="checkbox" id="notaryAck" name="client_acknowledgment" value="Confirmed" required />
@@ -363,6 +404,21 @@
     const requestButton = document.getElementById('requestButton');
     const submittedAt = document.getElementById('submitted_at');
     const preferredTime = document.getElementById('preferred_time');
+    const preferredDate = document.getElementById('preferred_date');
+    const urgency = document.getElementById('urgency');
+    const outsideHours = document.getElementById('outside_hours');
+    const weekend = document.getElementById('weekend');
+    const wetCopy = document.getElementById('wet_copy');
+    const overnight = document.getElementById('overnight');
+    const witness = document.getElementById('witness');
+    const summaryUrgency = document.getElementById('summary-urgency');
+    const summaryHours = document.getElementById('summary-hours');
+    const summaryWeekend = document.getElementById('summary-weekend');
+    const summaryWet = document.getElementById('summary-wet');
+    const summaryWitness = document.getElementById('summary-witness');
+    const summaryOvernight = document.getElementById('summary-overnight');
+    const summaryTotal = document.getElementById('summary-total');
+    const summaryAlert = document.getElementById('summary-alert');
 
     submittedAt.value = new Date().toISOString();
 
@@ -374,20 +430,109 @@
       }
     }
 
-    preferredTime.addEventListener('change', function () {
+    function dollars(amount) {
+      return '$' + amount;
+    }
+
+    function updateSummary() {
+      let total = 50;
+      let urgencyFee = 0;
+      let hoursFee = 0;
+      let weekendFee = 0;
+      let wetFee = 0;
+      let witnessFee = 0;
+
+      if (urgency.value.includes('+$25')) urgencyFee = 25;
+      if (outsideHours.value.includes('+$25')) hoursFee = 25;
+      if (weekend.value.includes('+$25')) weekendFee = 25;
+      if (wetCopy.value.includes('+$35')) wetFee = 35;
+      if (witness.value.includes('+$25')) witnessFee = 25;
+
+      total += urgencyFee + hoursFee + weekendFee + wetFee + witnessFee;
+
+      summaryUrgency.textContent = dollars(urgencyFee);
+      summaryHours.textContent = dollars(hoursFee);
+      summaryWeekend.textContent = dollars(weekendFee);
+      summaryWet.textContent = dollars(wetFee);
+      summaryWitness.textContent = dollars(witnessFee);
+      summaryOvernight.textContent = overnight.value.startsWith('Yes') ? 'Billed separately' : '$0';
+      summaryTotal.textContent = dollars(total);
+    }
+
+    function validatePreferredTime() {
+      summaryAlert.hidden = true;
+      summaryAlert.textContent = '';
+
+      if (!preferredTime.value) {
+        preferredTime.setCustomValidity('');
+        return;
+      }
+
+      const parts = preferredTime.value.split(':');
+      const hour = parseInt(parts[0], 10);
+      const minute = parseInt(parts[1], 10);
+
+      if (minute % 15 !== 0) {
+        preferredTime.setCustomValidity('Please use 15-minute increments such as 08:15, 13:30, or 20:45.');
+        return;
+      }
+
+      if (hour < 6 || hour > 20 || (hour === 20 && minute > 45)) {
+        preferredTime.setCustomValidity('Blackout hours are 9:00 PM to 6:00 AM Eastern. Please choose a time between 06:00 and 20:45.');
+        summaryAlert.hidden = false;
+        summaryAlert.textContent = 'Blackout hours are 9:00 PM to 6:00 AM Eastern every day. Please choose a time outside that window.';
+        return;
+      }
+
+      preferredTime.setCustomValidity('');
+    }
+
+    function syncBusinessHourSelections() {
       if (!preferredTime.value) return;
       const parts = preferredTime.value.split(':');
       const hour = parseInt(parts[0], 10);
       const minute = parseInt(parts[1], 10);
-      if (minute % 15 !== 0) {
-        preferredTime.setCustomValidity('Please use 15-minute increments such as 08:15, 13:30, or 20:45.');
-      } else {
-        preferredTime.setCustomValidity('');
+      const totalMinutes = (hour * 60) + minute;
+      const businessStart = 8 * 60;
+      const businessEnd = 17 * 60;
+
+      if (totalMinutes < businessStart || totalMinutes > businessEnd) {
+        outsideHours.value = 'Yes (+$25)';
       }
+
+      if (preferredDate.value) {
+        const chosen = new Date(preferredDate.value + 'T12:00:00');
+        const day = chosen.getDay();
+        if (day === 0 || day === 6) {
+          weekend.value = 'Yes (+$25)';
+        }
+      }
+
+      updateSummary();
+    }
+
+    preferredTime.addEventListener('change', function () {
+      validatePreferredTime();
+      syncBusinessHourSelections();
+    });
+
+    preferredDate.addEventListener('change', function () {
+      if (!preferredDate.value) return;
+      const chosen = new Date(preferredDate.value + 'T12:00:00');
+      const day = chosen.getDay();
+      if (day === 0 || day === 6) {
+        weekend.value = 'Yes (+$25)';
+      }
+      updateSummary();
+    });
+
+    [urgency, outsideHours, weekend, wetCopy, overnight, witness].forEach(function (field) {
+      field.addEventListener('change', updateSummary);
     });
 
     ack.addEventListener('change', syncButtonState);
     syncButtonState();
+    updateSummary();
   </script>
 </body>
 </html>
