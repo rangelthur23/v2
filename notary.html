@@ -60,6 +60,17 @@
       font-weight: 600;
     }
 
+    .field-meta {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: -0.15rem;
+    }
+
+    .price-tag {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
     .form-field input,
     .form-field select,
     .form-field textarea {
@@ -172,13 +183,15 @@
         </ul>
         <h3>Operating Hours</h3>
         <ul class="plain-list">
-          <li>Standard hours: Monday–Friday, 9:00 AM – 6:00 PM Eastern</li>
-          <li>After-hours: Any appointment before 9:00 AM, after 6:00 PM, or on weekends</li>
+          <li>Standard hours: Monday–Friday, 8:00 AM – 5:00 PM Eastern</li>
+          <li>After-hours: Any appointment before 8:00 AM, after 5:00 PM, or on weekends</li>
+          <li>Appointment requests should be made in 15-minute increments such as 08:15, 13:30, or 20:45</li>
         </ul>
         <h3>Add-ons</h3>
         <ul class="plain-list">
-          <li>After-hours: +$25</li>
+          <li>Outside business hours: +$25</li>
           <li>Weekend: +$25</li>
+          <li>Wet notarized mailed copy: +$35 handling</li>
           <li>Same-day rush: +$25–$50</li>
           <li>Witness provided: +$25 each</li>
         </ul>
@@ -218,7 +231,7 @@
         <p class="section-label">Book now</p>
         <h2>Request a remote notary appointment.</h2>
         <p class="lead">
-          Complete the intake form below. Your request will include a timestamp and stored record through the active Formspree intake.
+          Complete the intake form below. Every field is required. Appointment times should be entered in 15-minute increments and are handled in Eastern Time.
         </p>
 
         <div class="form-shell">
@@ -230,8 +243,12 @@
 
             <div class="form-grid">
               <div class="form-field">
-                <label for="full_name">Full name</label>
-                <input id="full_name" name="full_name" type="text" required />
+                <label for="first_name">First name</label>
+                <input id="first_name" name="first_name" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="last_name">Last name</label>
+                <input id="last_name" name="last_name" type="text" required />
               </div>
               <div class="form-field">
                 <label for="email">Email</label>
@@ -254,19 +271,12 @@
                 <input id="document_count" name="document_count" type="number" min="1" required />
               </div>
               <div class="form-field">
-                <label for="wet_copy">Wet notarized mailed copy needed?</label>
-                <select id="wet_copy" name="wet_copy" required>
+                <label for="urgency">Urgency</label>
+                <select id="urgency" name="urgency" required>
                   <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="overnight">Overnight return needed?</label>
-                <select id="overnight" name="overnight" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="Flexible">Flexible</option>
+                  <option value="Within 24 hours">Within 24 hours</option>
+                  <option value="Same day (+$25-$50)">Same day (+$25-$50)</option>
                 </select>
               </div>
               <div class="form-field">
@@ -275,15 +285,39 @@
               </div>
               <div class="form-field">
                 <label for="preferred_time">Preferred time</label>
-                <input id="preferred_time" name="preferred_time" type="time" required />
+                <input id="preferred_time" name="preferred_time" type="time" step="900" required />
+                <p class="field-meta">Use 15-minute increments only. Times are Eastern.</p>
               </div>
               <div class="form-field">
-                <label for="urgency">Urgency</label>
-                <select id="urgency" name="urgency" required>
+                <label for="outside_hours">Outside business hours?</label>
+                <select id="outside_hours" name="outside_hours" required>
                   <option value="">Select one</option>
-                  <option value="Flexible">Flexible</option>
-                  <option value="Within 24 hours">Within 24 hours</option>
-                  <option value="Same day">Same day</option>
+                  <option value="No">No</option>
+                  <option value="Yes (+$25)">Yes (+$25)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="weekend">Weekend appointment?</label>
+                <select id="weekend" name="weekend" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes (+$25)">Yes (+$25)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="wet_copy">Wet notarized mailed copy needed?</label>
+                <select id="wet_copy" name="wet_copy" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes (+$35 handling)">Yes (+$35 handling)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="overnight">Overnight return needed?</label>
+                <select id="overnight" name="overnight" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes (shipping billed separately)">Yes (shipping billed separately)</option>
                 </select>
               </div>
               <div class="form-field">
@@ -291,12 +325,12 @@
                 <select id="witness" name="witness" required>
                   <option value="">Select one</option>
                   <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="Yes (+$25 each)">Yes (+$25 each)</option>
                 </select>
               </div>
               <div class="form-field full-span">
                 <label for="notes">Additional notes</label>
-                <textarea id="notes" name="notes"></textarea>
+                <textarea id="notes" name="notes" required></textarea>
               </div>
             </div>
 
@@ -328,6 +362,7 @@
     const ack = document.getElementById('notaryAck');
     const requestButton = document.getElementById('requestButton');
     const submittedAt = document.getElementById('submitted_at');
+    const preferredTime = document.getElementById('preferred_time');
 
     submittedAt.value = new Date().toISOString();
 
@@ -338,6 +373,18 @@
         requestButton.setAttribute('aria-disabled', 'true');
       }
     }
+
+    preferredTime.addEventListener('change', function () {
+      if (!preferredTime.value) return;
+      const parts = preferredTime.value.split(':');
+      const hour = parseInt(parts[0], 10);
+      const minute = parseInt(parts[1], 10);
+      if (minute % 15 !== 0) {
+        preferredTime.setCustomValidity('Please use 15-minute increments such as 08:15, 13:30, or 20:45.');
+      } else {
+        preferredTime.setCustomValidity('');
+      }
+    });
 
     ack.addEventListener('change', syncButtonState);
     syncButtonState();
