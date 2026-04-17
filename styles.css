@@ -280,7 +280,7 @@ h3 {
 }
 
 .team-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 2rem;
 }
 
@@ -294,7 +294,7 @@ h3 {
 }
 
 .profile-image {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1 / 1;
   margin-bottom: 1rem;
 }
 
@@ -303,17 +303,19 @@ h3 {
   gap: 2rem;
 }
 
-.bio-block,
-.bio-block.reverse {
-  flex-direction: column;
+.bio-block {
   padding: 0;
 }
 
+.bio-block.reverse {
+  flex-direction: row-reverse;
+}
+
 .bio-image {
-  width: 100%;
-  flex: auto;
+  width: min(100%, 340px);
+  flex: 0 0 340px;
   min-height: 340px;
-  max-height: 520px;
+  max-height: none;
 }
 
 .bio-copy {
@@ -379,6 +381,11 @@ h3 {
   .contact-card {
     width: 100%;
     min-width: 0;
+  }
+
+  .bio-block,
+  .bio-block.reverse {
+    flex-direction: column;
   }
 
   .bio-image {
