@@ -259,7 +259,7 @@
         <p class="section-label">Book now</p>
         <h2>Request a remote notary appointment.</h2>
         <p class="lead">
-          Complete the intake form below. Every field is required. Appointment times should be entered in 15-minute increments and are handled in Eastern Time.
+          Complete the intake form below. Every field is required except notes. Appointment times default to 15-minute increments and are handled in Eastern Time.
         </p>
 
         <div class="form-shell">
@@ -313,7 +313,7 @@
               </div>
               <div class="form-field">
                 <label for="preferred_time">Preferred time</label>
-                <input id="preferred_time" name="preferred_time" type="time" step="900" min="06:00" max="20:45" required />
+                <input id="preferred_time" name="preferred_time" type="time" step="900" min="06:00" max="20:45" value="08:00" required />
                 <p class="field-meta">Use 15-minute increments only. Times are Eastern. Blackout hours are 9:00 PM–6:00 AM.</p>
               </div>
               <div class="form-field">
@@ -358,7 +358,7 @@
               </div>
               <div class="form-field full-span">
                 <label for="notes">Additional notes</label>
-                <textarea id="notes" name="notes" required></textarea>
+                <textarea id="notes" name="notes"></textarea>
               </div>
             </div>
 
@@ -532,6 +532,8 @@
 
     ack.addEventListener('change', syncButtonState);
     syncButtonState();
+    validatePreferredTime();
+    syncBusinessHourSelections();
     updateSummary();
   </script>
 </body>
