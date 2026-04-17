@@ -11,7 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .ack-box {
+    .ack-box,
+    .form-shell {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1rem 1.1rem;
@@ -35,6 +36,61 @@
       opacity: 0.45;
       pointer-events: none;
       cursor: not-allowed;
+    }
+
+    .notary-form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-field label {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 0.85rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #111111;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .form-field textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    .full-span {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 860px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -157,45 +213,105 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container narrow">
-        <p class="section-label">Appointment intake</p>
-        <h2>What to include when requesting an appointment.</h2>
-        <ul class="plain-list">
-          <li>Full name</li>
-          <li>Phone number and email</li>
-          <li>Your city and state</li>
-          <li>Document type and number of documents</li>
-          <li>Whether you need wet notarization of a physically mailed copy</li>
-          <li>Whether overnight return is required</li>
-          <li>Confirmation that your document is eligible for remote notarization</li>
-          <li>Confirmation that a printed and wet notarized copy, if requested, will be accepted by the receiving party</li>
-          <li>Preferred date and time</li>
-          <li>Urgency level</li>
-          <li>Whether you need a witness</li>
-        </ul>
-      </div>
-    </section>
-
     <section class="section" id="book-now">
-      <div class="container contact-panel">
-        <div>
-          <p class="section-label">Book now</p>
-          <h2>Request a remote notary appointment.</h2>
-          <p>
-            Review the acknowledgment below before submitting your request. Once confirmed, the appointment request button will unlock.
-          </p>
-          <div class="ack-box">
-            <label class="ack-row" for="notaryAck">
-              <input type="checkbox" id="notaryAck" />
-              <span>I confirm that my document is eligible for remote notarization and, if I request a printed and wet notarized copy, I have confirmed that this format will be accepted by the receiving party.</span>
-            </label>
-          </div>
-        </div>
-        <div class="contact-card">
-          <p class="contact-label">Primary email</p>
-          <a id="requestButton" class="contact-link button button-primary" aria-disabled="true" href="mailto:contact@ralwyn.com?subject=Notary%20Appointment%20Request">Request Appointment</a>
-          <p class="contact-note">Remote Online Notary for Tennessee and Georgia, with optional physical document handling when appropriate.</p>
+      <div class="container narrow">
+        <p class="section-label">Book now</p>
+        <h2>Request a remote notary appointment.</h2>
+        <p class="lead">
+          Complete the intake form below. Your request will include a timestamp and stored record through your form provider once the endpoint is connected.
+        </p>
+
+        <div class="form-shell">
+          <form class="notary-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
+            <input type="hidden" name="service" value="Notary Appointment Request" />
+            <input type="hidden" id="submitted_at" name="submitted_at" value="" />
+            <input type="hidden" name="_subject" value="Ralwyn Notary Appointment Request" />
+            <input type="hidden" name="_cc" value="contact@ralwyn.com" />
+            <input type="hidden" name="_autoresponse" value="Thank you for your notary request. We have received your intake form and will follow up shortly with availability, pricing, and next steps. By submitting this request, you confirmed that your document is eligible for remote notarization and, if requested, that a printed and wet notarized copy will be accepted by the receiving party." />
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="full_name">Full name</label>
+                <input id="full_name" name="full_name" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="form-field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" type="tel" required />
+              </div>
+              <div class="form-field">
+                <label for="location">City and state</label>
+                <input id="location" name="location" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="document_type">Document type</label>
+                <input id="document_type" name="document_type" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="document_count">Number of documents</label>
+                <input id="document_count" name="document_count" type="number" min="1" required />
+              </div>
+              <div class="form-field">
+                <label for="wet_copy">Wet notarized mailed copy needed?</label>
+                <select id="wet_copy" name="wet_copy" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="overnight">Overnight return needed?</label>
+                <select id="overnight" name="overnight" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="preferred_date">Preferred date</label>
+                <input id="preferred_date" name="preferred_date" type="date" required />
+              </div>
+              <div class="form-field">
+                <label for="preferred_time">Preferred time</label>
+                <input id="preferred_time" name="preferred_time" type="time" required />
+              </div>
+              <div class="form-field">
+                <label for="urgency">Urgency</label>
+                <select id="urgency" name="urgency" required>
+                  <option value="">Select one</option>
+                  <option value="Flexible">Flexible</option>
+                  <option value="Within 24 hours">Within 24 hours</option>
+                  <option value="Same day">Same day</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="witness">Witness needed?</label>
+                <select id="witness" name="witness" required>
+                  <option value="">Select one</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+              <div class="form-field full-span">
+                <label for="notes">Additional notes</label>
+                <textarea id="notes" name="notes"></textarea>
+              </div>
+            </div>
+
+            <div class="ack-box">
+              <label class="ack-row" for="notaryAck">
+                <input type="checkbox" id="notaryAck" name="client_acknowledgment" value="Confirmed" required />
+                <span>I confirm that my document is eligible for remote notarization and, if I request a printed and wet notarized copy, I have confirmed that this format will be accepted by the receiving party.</span>
+              </label>
+            </div>
+
+            <p class="form-note">This form is configured for Formspree. Replace the placeholder form action with your live Formspree endpoint to activate stored submissions and autoresponses.</p>
+
+            <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Submit Notary Request</button>
+          </form>
         </div>
       </div>
     </section>
@@ -212,13 +328,20 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     const ack = document.getElementById('notaryAck');
     const requestButton = document.getElementById('requestButton');
-    ack.addEventListener('change', function () {
+    const submittedAt = document.getElementById('submitted_at');
+
+    submittedAt.value = new Date().toISOString();
+
+    function syncButtonState() {
       if (ack.checked) {
         requestButton.setAttribute('aria-disabled', 'false');
       } else {
         requestButton.setAttribute('aria-disabled', 'true');
       }
-    });
+    }
+
+    ack.addEventListener('change', syncButtonState);
+    syncButtonState();
   </script>
 </body>
 </html>
