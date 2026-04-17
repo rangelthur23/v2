@@ -218,11 +218,11 @@
         <p class="section-label">Book now</p>
         <h2>Request a remote notary appointment.</h2>
         <p class="lead">
-          Complete the intake form below. Your request will include a timestamp and stored record through your form provider once the endpoint is connected.
+          Complete the intake form below. Your request will include a timestamp and stored record through the active Formspree intake.
         </p>
 
         <div class="form-shell">
-          <form class="notary-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
+          <form class="notary-form" action="https://formspree.io/f/mdaygwbk" method="POST">
             <input type="hidden" name="service" value="Notary Appointment Request" />
             <input type="hidden" id="submitted_at" name="submitted_at" value="" />
             <input type="hidden" name="_subject" value="Ralwyn Notary Appointment Request" />
@@ -308,7 +308,7 @@
               </label>
             </div>
 
-            <p class="form-note">This form is configured for Formspree. Replace the placeholder form action with your live Formspree endpoint to activate stored submissions and autoresponses.</p>
+            <p class="form-note">Submitting this form creates a stored record with timestamp and acknowledgment through the Formspree intake.</p>
 
             <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Submit Notary Request</button>
           </form>
