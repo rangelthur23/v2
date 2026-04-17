@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ralwyn | Clarity. Structure. Measurable Progress.</title>
+  <meta name="description" content="Independent advisory focused on clarity, structure, and measurable progress for individuals and small businesses." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Ralwyn home">Ralwyn</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Independent advisory</p>
+          <h1>Clarity. Structure. Measurable Progress.</h1>
+          <p class="lead">
+            Ralwyn helps individuals and small businesses make clearer decisions through structured guidance,
+            practical analysis, and focused execution planning.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="mailto:contact@ralwyn.com">Contact Ralwyn</a>
+            <a class="button button-secondary" href="#services">View Services</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="panel-card">
+            <h2>Built for clients who want:</h2>
+            <ul>
+              <li>Clear direction instead of noise</li>
+              <li>Structured thinking without inflated claims</li>
+              <li>Practical next steps grounded in experience</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="about">
+      <div class="container narrow">
+        <p class="section-label">About</p>
+        <h2>Practical guidance rooted in real-world experience.</h2>
+        <p>
+          Ralwyn is led by Ryan and Lisa, combining deep experience in business operations, accounting,
+          leadership, and healthcare. Ryan brings more than 15 years of operational accounting experience in
+          commercial real estate and construction, with strengths in strategy, coordination, and problem-solving.
+          Lisa is a registered nurse and clinical leader with 15 years of experience in women’s services,
+          bringing a strong background in patient care, team leadership, and operational support.
+          Together, they bring a practical, people-focused approach grounded in real-world experience.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <p class="section-label">Core services</p>
+        <h2>Clear support across decisions, analysis, and execution.</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Advisory</h3>
+            <p>Structured guidance for important business and operational decisions.</p>
+          </article>
+          <article class="card">
+            <h3>Analysis</h3>
+            <p>Evaluation of options, tradeoffs, and likely outcomes with a focus on signal over noise.</p>
+          </article>
+          <article class="card">
+            <h3>Execution</h3>
+            <p>Implementation planning, workflow refinement, and practical next-step structure.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Why Ralwyn</p>
+        <h2>Focused on clarity, not clutter.</h2>
+        <div class="check-grid">
+          <div class="check-item">Reduce complexity</div>
+          <div class="check-item">Define direction clearly</div>
+          <div class="check-item">Execute with precision</div>
+          <div class="check-item">Deliver structured outcomes</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-panel">
+        <div>
+          <p class="section-label">Contact</p>
+          <h2>Email-first contact.</h2>
+          <p>
+            The primary contact method is email. Phone can be added later in the footer or contact page,
+            but it is intentionally not the main call to action.
+          </p>
+        </div>
+        <div class="contact-card">
+          <p class="contact-label">Primary email</p>
+          <a class="contact-link" href="mailto:contact@ralwyn.com">contact@ralwyn.com</a>
+          <p class="contact-note">Independent advisory services only. Not financial, legal, or tax advice.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Ralwyn. All rights reserved.</p>
+      <p class="footer-note">Clarity. Structure. Measurable Progress.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
