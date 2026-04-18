@@ -160,6 +160,66 @@
       .switcher-options,
       .form-grid { grid-template-columns: 1fr; }
     }
+    @media (max-width: 860px) {
+      .notice-box,
+      .form-shell,
+      .summary-box,
+      .success-box,
+      .process-box,
+      .service-switcher,
+      .pricing-panel,
+      .coming-soon-box,
+      .support-box,
+      .switcher-card {
+        padding: 0.95rem 1rem;
+        margin-top: 0.85rem;
+      }
+      .switcher-options {
+        gap: 0.6rem;
+      }
+      .switcher-card ul,
+      .process-box ul,
+      .success-box ul,
+      .pricing-panel ul,
+      .support-box ul {
+        margin-top: 0.45rem;
+      }
+      .form-grid {
+        gap: 0.85rem;
+      }
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        padding: 0.82rem 0.9rem;
+      }
+      .form-field textarea {
+        min-height: 110px;
+      }
+      .field-meta,
+      .form-note,
+      .inline-alert {
+        font-size: 0.9rem;
+      }
+      .summary-line {
+        gap: 0.75rem;
+      }
+      .ack-row {
+        gap: 0.6rem;
+      }
+      .hero-actions {
+        margin-top: 0.85rem;
+      }
+    }
+    @media (max-width: 560px) {
+      .summary-line {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .summary-total {
+        margin-top: 0.6rem;
+        padding-top: 0.6rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -169,6 +229,7 @@
         <img src="assets/UpdatedLogo.png" alt="Ralwyn logo" class="logo" />
       </a>
       <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="services.html">Services</a>
         <a href="notary.html" aria-current="page">Notary</a>
