@@ -20,7 +20,8 @@
     .process-box,
     .service-switcher,
     .pricing-panel,
-    .coming-soon-box {
+    .coming-soon-box,
+    .support-box {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1rem 1.1rem;
@@ -53,11 +54,14 @@
     .summary-box p,
     .success-box p,
     .process-box p,
-    .coming-soon-box p { color: var(--muted); }
+    .coming-soon-box p,
+    .support-box p,
+    .support-box li { color: var(--muted); }
     .switcher-card ul,
     .process-box ul,
     .success-box ul,
-    .pricing-panel ul {
+    .pricing-panel ul,
+    .support-box ul {
       margin: 0.55rem 0 0;
       padding-left: 1.15rem;
       color: var(--muted);
@@ -102,7 +106,10 @@
       font-size: 0.92rem;
       font-weight: 700;
     }
-    .inline-alert a {
+    .inline-alert a,
+    .form-error a,
+    .summary-alert a,
+    .support-box a {
       color: #fca5a5;
       text-decoration: underline;
     }
@@ -117,12 +124,11 @@
       padding: 0.22rem 0;
     }
     .summary-line.hidden-block {
-  display: none;
-}
-
-.summary-line.hidden-block.is-visible {
-  display: flex;
-}
+      display: none;
+    }
+    .summary-line.hidden-block.is-visible {
+      display: flex;
+    }
     .summary-total {
       margin-top: 0.75rem;
       padding-top: 0.75rem;
@@ -176,8 +182,8 @@
     <section class="page-hero">
       <div class="container narrow">
         <p class="eyebrow">Tennessee notary services</p>
-        <h1 class="page-title">In-person and mobile notary appointments live. Remote online notary coming soon.</h1>
-        <p class="lead">Ralwyn currently offers Tennessee in-person and mobile notary services by appointment only. Remote Online Notarization (RON) is in progress and will be offered after Tennessee approval is complete.</p>
+        <h1 class="page-title">In-person and mobile notary services in Tennessee. Remote online notary coming soon.</h1>
+        <p class="lead">Book in-person or mobile notary service by appointment. Remote Online Notary service is coming soon pending Tennessee approval.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#book-now">Request Service</a>
           <a class="button button-secondary" href="#pricing">View Pricing</a>
@@ -189,33 +195,33 @@
       <div class="container narrow">
         <div class="service-switcher">
           <p class="section-label">Choose a service path</p>
-          <h2>One page, three clear paths.</h2>
+          <h2>Choose the service that fits your appointment.</h2>
           <div class="switcher-options">
             <article id="card-inperson" class="switcher-card is-active">
               <h3>In-Person Notary</h3>
-              <p>Active now. Best for office-style appointments.</p>
+              <p>Active now. Best for fixed-location appointments.</p>
               <ul>
+                <li>$25 per notarial act</li>
+                <li>Travel and location-based fees may apply</li>
                 <li>Monday–Friday, 8:00 AM–4:00 PM</li>
-                <li>No rush service</li>
-                <li>Fixed-location appointment request</li>
               </ul>
             </article>
             <article id="card-mobile" class="switcher-card">
               <h3>Mobile Notary</h3>
-              <p>Active now. We come to your location.</p>
+              <p>Active now. We travel to the confirmed appointment location.</p>
               <ul>
-                <li>$25 travel base includes first mile</li>
-                <li>$1 per mile after the first mile</li>
-                <li>Travel total confirmed before booking</li>
+                <li>$25 per notarial act</li>
+                <li>Travel and mileage apply where applicable</li>
+                <li>Monday–Friday, 8:00 AM–4:00 PM</li>
               </ul>
             </article>
             <article id="card-ron" class="switcher-card">
               <h3>Remote Online Notary</h3>
-              <p>Coming soon pending Tennessee approval.</p>
+              <p>Coming soon. Remote Online Notary service is not active yet.</p>
               <ul>
                 <li>Join the notification list now</li>
-                <li>No payment or appointment taken yet</li>
-                <li>Interest list helps prioritize launch</li>
+                <li>No booking or payment is taken yet</li>
+                <li>Launch follows Tennessee approval</li>
               </ul>
             </article>
           </div>
@@ -226,32 +232,36 @@
     <section class="section section-alt" id="pricing">
       <div class="container narrow">
         <p class="section-label">Pricing</p>
-        <h2>Transparent Tennessee pricing with the notarial act separated clearly.</h2>
+        <h2>Clear Tennessee pricing.</h2>
 
         <div id="pricing-inperson" class="pricing-panel">
-          <h3>In-Person Notary (Active)</h3>
+          <h3>In-Person Notary</h3>
           <ul class="plain-list">
-            <li><strong>Notarial Act (Per Stamp): $25</strong> — Tennessee state maximum</li>
-            <li><strong>Minimum Travel Fee:</strong> $25</li>
-            <li><strong>Premium Customer-Suggested Location Fee:</strong> +$25 when selected</li>
+            <li><strong>Notarial act (per stamp): $25</strong> — Tennessee state maximum</li>
+            <li><strong>Minimum travel fee:</strong> $25</li>
+            <li><strong>Premium customer-suggested location fee:</strong> +$25 when selected</li>
+            <li><strong>Additional mileage:</strong> $1 per mile after the first mile, when applicable</li>
           </ul>
-          <p class="form-note">The $25 fee applies only to the notarial act. In-person requests now include a minimum travel fee for clarity, and premium customer-suggested locations add a separate service charge before any extra mileage review.</p>
+          <p class="form-note">The $25 fee applies only to the notarial act. Travel, premium location, and mileage charges are separate when applicable.</p>
         </div>
 
         <div id="pricing-mobile" class="pricing-panel hidden-block">
-          <h3>Mobile Notary (Active)</h3>
+          <h3>Mobile Notary</h3>
           <ul class="plain-list">
-            <li><strong>Notarial Act (Per Stamp): $25</strong> — Tennessee state maximum</li>
-            <li><strong>Travel Fee:</strong> $25 base, including the first mile</li>
-            <li><strong>Additional Mileage:</strong> $1 per mile after the first mile</li>
+            <li><strong>Notarial act (per stamp): $25</strong> — Tennessee state maximum</li>
+            <li><strong>Travel fee:</strong> $25 base, including the first mile</li>
+            <li><strong>Additional mileage:</strong> $1 per mile after the first mile</li>
           </ul>
-          <p class="form-note">The $25 fee applies only to the notarial act. Travel charges are separate and reflect time, distance, scheduling, and service delivery. Final travel charges are confirmed before the appointment is scheduled.</p>
+          <p class="form-note">Mobile travel charges are confirmed before the appointment is finalized.</p>
         </div>
 
         <div id="pricing-ron" class="coming-soon-box hidden-block">
-          <h3>Remote Online Notary (Coming Soon)</h3>
-          <p>Remote Online Notarization is not yet active. Tennessee approval is in progress.</p>
-          <p><strong>Important:</strong> when remote service launches, the notarial act will remain capped at <strong>$25 per stamp</strong> under Tennessee law. Any additional administrative, technical, identity-verification, or operational charges will be presented separately and clearly before booking.</p>
+          <h3>Remote Online Notary</h3>
+          <ul class="plain-list">
+            <li><strong>Status:</strong> Coming soon pending Tennessee approval</li>
+            <li><strong>When active:</strong> $25 per online notarization</li>
+            <li><strong>Additional fees:</strong> Any administrative, technical, identity-verification, convenience, or operational fees will be presented clearly before booking</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -261,17 +271,17 @@
         <div id="details-inperson" class="notice-box">
           <p class="section-label">Live service</p>
           <h2>In-person notary service by appointment only.</h2>
-          <p>Use the form below to request a fixed-location appointment. This path now shows the minimum travel fee up front and adds premium service charges only when you choose a customer-suggested meeting point.</p>
+          <p>Submit your request below. We review the details, confirm availability, and finalize the appointment location before service is scheduled.</p>
         </div>
         <div id="details-mobile" class="notice-box hidden-block">
           <p class="section-label">Live service</p>
           <h2>Mobile notary service by appointment only.</h2>
-          <p>Use the form below to request travel-based service. Include the signing address so travel pricing can be confirmed before the appointment is finalized.</p>
+          <p>Submit your request below. We review the address, confirm travel pricing, and finalize availability before the appointment is scheduled.</p>
         </div>
         <div id="details-ron" class="coming-soon-box hidden-block">
           <p class="section-label">Coming soon</p>
           <h2>Remote Online Notary is not live yet.</h2>
-          <p>Use the form below to join the waitlist. You will be notified when Tennessee Remote Online Notary service is approved and ready to book.</p>
+          <p>Join the notification list below to be updated when Tennessee approval is complete and remote service is ready to book.</p>
         </div>
       </div>
     </section>
@@ -280,30 +290,30 @@
       <div class="container narrow">
         <p class="section-label">How it works</p>
         <div id="process-inperson" class="process-box">
-          <h3>In-person workflow</h3>
+          <h3>In-Person</h3>
           <ul>
             <li>1. Submit your request</li>
-            <li>2. We review availability and confirm the meeting location</li>
-            <li>3. You receive appointment confirmation</li>
-            <li>4. We complete notarization at the confirmed appointment</li>
+            <li>2. We review the details and confirm availability</li>
+            <li>3. We confirm the appointment location</li>
+            <li>4. Notarization is completed at the confirmed appointment</li>
           </ul>
         </div>
         <div id="process-mobile" class="process-box hidden-block">
-          <h3>Mobile workflow</h3>
+          <h3>Mobile</h3>
           <ul>
-            <li>1. Submit your request with the signing address</li>
-            <li>2. We review availability and confirm travel pricing</li>
-            <li>3. You receive appointment confirmation</li>
+            <li>1. Submit your request</li>
+            <li>2. We review the address and confirm travel pricing</li>
+            <li>3. We confirm availability</li>
             <li>4. We travel to the confirmed location and complete notarization</li>
           </ul>
         </div>
         <div id="process-ron" class="process-box hidden-block">
-          <h3>Remote online notary launch workflow</h3>
+          <h3>Remote Online Notary</h3>
           <ul>
-            <li>1. Join the waitlist now</li>
-            <li>2. Receive launch notice after Tennessee approval</li>
-            <li>3. Review live pricing and compliance details</li>
-            <li>4. Book a secure video notarization once active</li>
+            <li>1. Join the notification list</li>
+            <li>2. Receive an update when Tennessee approval is complete</li>
+            <li>3. Review pricing and requirements</li>
+            <li>4. Book remote service when it becomes active</li>
           </ul>
         </div>
       </div>
@@ -311,9 +321,9 @@
 
     <section class="section" id="book-now">
       <div class="container narrow">
-        <p class="section-label">Request now</p>
+        <p class="section-label">Request service</p>
         <h2 id="form-heading">Request an in-person notary appointment.</h2>
-        <p id="form-subheading" class="lead">All fields are required except notes. This path is for fixed-location appointments with the minimum travel fee shown up front.</p>
+        <p id="form-subheading" class="lead">Complete the form below to request in-person or mobile notary service, or join the remote online notary notification list.</p>
 
         <div id="success-box" class="success-box" aria-live="polite">
           <h3>Request received</h3>
@@ -567,10 +577,10 @@
               <div id="summary-inperson" class="is-visible">
                 <div class="summary-line"><span>Notarial act</span><span id="summary-stamp-fee">$25</span></div>
                 <div class="summary-line"><span>Minimum travel fee</span><span>$25</span></div>
-                <div class="summary-line"><span>Appointment location tier</span><span id="summary-location-tier">Select a location tier</span></div>
+                <div class="summary-line"><span>Location tier</span><span id="summary-location-tier">Not selected</span></div>
                 <div class="summary-line hidden-block" id="summary-premium-line"><span>Premium service charge</span><span>$25</span></div>
                 <div class="summary-line summary-total"><span>Current estimate</span><span id="summary-total">$50</span></div>
-                <p class="form-note">The $25 fee applies only to the notarial act. Customer-suggested locations add a premium service charge before any extra mileage review.</p>
+                <p class="form-note">Travel, premium location, and mileage charges are shown separately when applicable.</p>
               </div>
 
               <div id="summary-mobile" class="hidden-block">
@@ -578,15 +588,15 @@
                 <div class="summary-line"><span>Travel base</span><span>$25</span></div>
                 <div class="summary-line"><span>Additional mileage</span><span>Confirmed after address review</span></div>
                 <div class="summary-line summary-total"><span>Current estimate before extra mileage</span><span id="summary-mobile-total">$50</span></div>
-                <p class="form-note">The $25 fee applies only to the notarial act. Travel charges are separate and confirmed before scheduling.</p>
+                <p class="form-note">Travel charges are confirmed before the appointment is finalized.</p>
               </div>
 
               <div id="summary-ron" class="hidden-block">
                 <div class="summary-line"><span>Remote Online Notary status</span><span>Coming soon</span></div>
-                <div class="summary-line"><span>Notarial act (when active)</span><span>$25 per stamp</span></div>
-                <div class="summary-line"><span>Additional fees</span><span>Presented separately at launch</span></div>
+                <div class="summary-line"><span>Notarial act (when active)</span><span>$25 per online notarization</span></div>
+                <div class="summary-line"><span>Additional fees</span><span>Presented clearly before booking</span></div>
                 <div class="summary-line summary-total"><span>Current action</span><span>Join waitlist</span></div>
-                <p class="form-note">No remote booking is being taken at this time. This request places you on the notification list only.</p>
+                <p class="form-note">No remote booking is being taken at this time.</p>
               </div>
 
               <p id="summary-alert" class="summary-alert" hidden></p>
@@ -596,7 +606,7 @@
             <div class="notice-box">
               <label class="ack-row" for="notaryAck">
                 <input type="checkbox" id="notaryAck" name="client_acknowledgment" value="Confirmed" required />
-                <span id="ack-copy">I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.</span>
+                <span id="ack-copy">I understand that appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.</span>
               </label>
             </div>
 
@@ -604,6 +614,24 @@
 
             <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Request In-Person Appointment</button>
           </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container narrow">
+        <div class="support-box">
+          <p class="section-label">Need more detail before booking?</p>
+          <h2>Review the FAQ before you request service.</h2>
+          <ul>
+            <li>ID requirements</li>
+            <li>Appointment rules</li>
+            <li>Mileage clarification</li>
+            <li>Remote online notary status</li>
+          </ul>
+          <div class="hero-actions" style="margin-top:1rem;">
+            <a class="button button-secondary" href="faq.html">View FAQ</a>
+          </div>
         </div>
       </div>
     </section>
@@ -622,10 +650,10 @@
     const serviceConfig = {
       in_person: {
         formHeading: 'Request an in-person notary appointment.',
-        formSubheading: 'All fields are required except notes. This path is for fixed-location appointments with the minimum travel fee shown up front.',
+        formSubheading: 'Complete the form below to request in-person or mobile notary service, or join the remote online notary notification list.',
         buttonText: 'Request In-Person Appointment',
         summaryHeading: 'Estimated in-person pricing',
-        ackCopy: 'I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.',
+        ackCopy: 'I understand that appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.',
         autoResponse: 'Thank you for your in-person notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, confirmation, and next steps.',
         successCopy: 'Your in-person notary request has been submitted successfully. We will review your details and follow up shortly from notary.service@ralwyn.com with appointment confirmation.',
         estimateValue: '$50 minimum',
@@ -634,10 +662,10 @@
       },
       mobile: {
         formHeading: 'Request a mobile notary appointment.',
-        formSubheading: 'All fields are required except notes. Travel pricing is confirmed after address review.',
+        formSubheading: 'Complete the form below to request in-person or mobile notary service, or join the remote online notary notification list.',
         buttonText: 'Request Mobile Notary',
         summaryHeading: 'Estimated mobile pricing',
-        ackCopy: 'I understand that mobile notary appointments are by request only and that the appointment is not final until travel pricing and availability are confirmed.',
+        ackCopy: 'I understand that appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.',
         autoResponse: 'Thank you for your mobile notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, travel pricing, and next steps.',
         successCopy: 'Your mobile notary request has been submitted successfully. We will review your details and follow up shortly from notary.service@ralwyn.com with availability and travel confirmation.',
         estimateValue: '$50 before extra mileage',
@@ -646,9 +674,9 @@
       },
       ron_waitlist: {
         formHeading: 'Join the remote online notary notification list.',
-        formSubheading: 'Remote Online Notary is not active yet. Use this form to be notified when Tennessee approval is complete.',
+        formSubheading: 'Complete the form below to request in-person or mobile notary service, or join the remote online notary notification list.',
         buttonText: 'Join Remote Notary Waitlist',
-        summaryHeading: 'Remote online notary launch summary',
+        summaryHeading: 'Remote online notary status',
         ackCopy: 'I understand that Remote Online Notary service is not active yet and that this submission places me on the notification list only. No remote appointment is being booked at this time.',
         autoResponse: 'Thank you for your interest in Remote Online Notary service. Tennessee approval is still in progress. We have added your information to the notification list and will follow up once remote service becomes available.',
         successCopy: 'Your Remote Online Notary interest request has been submitted successfully. We will notify you from notary.service@ralwyn.com when remote service becomes available.',
@@ -818,7 +846,7 @@
       const premiumServiceCharge = isPremium ? 25 : 0;
       const total = stampFee + minimumTravelFee + premiumServiceCharge;
       summaryStampFee.textContent = dollars(stampFee);
-      summaryLocationTier.textContent = meetingLocation.value || 'Select a location tier';
+      summaryLocationTier.textContent = meetingLocation.value || 'Not selected';
       toggleVisible('summary-premium-line', isPremium);
       summaryTotal.textContent = dollars(total);
       estimateTotal.value = dollars(total) + (isPremium ? ' before extra mileage review' : ' minimum');
