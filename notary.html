@@ -379,8 +379,43 @@
                 </div>
                 <div class="form-field">
                   <label for="preferred_time">Preferred time</label>
-                  <input id="preferred_time" name="preferred_time" type="time" step="900" min="08:00" max="16:00" value="08:00" required />
-                  <p class="field-meta">Accepted times only: :00, :15, :30, or :45. Business hours are Monday–Friday, 8:00 AM–4:00 PM.</p>
+                  <select id="preferred_time" name="preferred_time" required>
+                    <option value="">Select a time</option>
+                    <option value="08:00">08:00 AM</option>
+                    <option value="08:15">08:15 AM</option>
+                    <option value="08:30">08:30 AM</option>
+                    <option value="08:45">08:45 AM</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="09:15">09:15 AM</option>
+                    <option value="09:30">09:30 AM</option>
+                    <option value="09:45">09:45 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:15">10:15 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="10:45">10:45 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:15">11:15 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="11:45">11:45 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:15">12:15 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="12:45">12:45 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="13:15">01:15 PM</option>
+                    <option value="13:30">01:30 PM</option>
+                    <option value="13:45">01:45 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="14:15">02:15 PM</option>
+                    <option value="14:30">02:30 PM</option>
+                    <option value="14:45">02:45 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="15:15">03:15 PM</option>
+                    <option value="15:30">03:30 PM</option>
+                    <option value="15:45">03:45 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                  </select>
+                  <p class="field-meta">Choose one of the available 15-minute appointment slots between 8:00 AM and 4:00 PM, Monday–Friday.</p>
                 </div>
                 <div class="form-field">
                   <label for="id_ready">Will all signers have ID ready?</label>
@@ -418,8 +453,43 @@
                 </div>
                 <div class="form-field">
                   <label for="mobile_preferred_time">Preferred time</label>
-                  <input id="mobile_preferred_time" name="mobile_preferred_time" type="time" step="900" min="08:00" max="16:00" value="08:00" />
-                  <p class="field-meta">Accepted times only: :00, :15, :30, or :45. Business hours are Monday–Friday, 8:00 AM–4:00 PM.</p>
+                  <select id="mobile_preferred_time" name="mobile_preferred_time">
+                    <option value="">Select a time</option>
+                    <option value="08:00">08:00 AM</option>
+                    <option value="08:15">08:15 AM</option>
+                    <option value="08:30">08:30 AM</option>
+                    <option value="08:45">08:45 AM</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="09:15">09:15 AM</option>
+                    <option value="09:30">09:30 AM</option>
+                    <option value="09:45">09:45 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:15">10:15 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="10:45">10:45 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:15">11:15 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="11:45">11:45 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:15">12:15 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="12:45">12:45 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="13:15">01:15 PM</option>
+                    <option value="13:30">01:30 PM</option>
+                    <option value="13:45">01:45 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="14:15">02:15 PM</option>
+                    <option value="14:30">02:30 PM</option>
+                    <option value="14:45">02:45 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="15:15">03:15 PM</option>
+                    <option value="15:30">03:30 PM</option>
+                    <option value="15:45">03:45 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                  </select>
+                  <p class="field-meta">Choose one of the available 15-minute appointment slots between 8:00 AM and 4:00 PM, Monday–Friday.</p>
                 </div>
                 <div class="form-field">
                   <label for="location_type">Location type</label>
@@ -533,7 +603,7 @@
     const serviceConfig = {
       in_person: {
         formHeading: 'Request an in-person notary appointment.',
-        formSubheading: 'All fields are required except notes. This path shows the minimum travel fee up front for clarity.',
+        formSubheading: 'All fields are required except notes. This path is for fixed-location appointments with the minimum travel fee shown up front.',
         buttonText: 'Request In-Person Appointment',
         summaryHeading: 'Estimated in-person pricing',
         ackCopy: 'I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.',
@@ -676,7 +746,9 @@
 
     function validateBusinessTime(field, message) {
       if (!field.value) {
-        field.setCustomValidity('');
+        field.setCustomValidity('Please choose one of the available appointment times.');
+        summaryAlert.hidden = false;
+        summaryAlert.textContent = 'Please choose one of the available appointment times.';
         return;
       }
       const parts = field.value.split(':');
