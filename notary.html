@@ -209,9 +209,10 @@
           <h3>In-Person Notary (Active)</h3>
           <ul class="plain-list">
             <li><strong>Notarial Act (Per Stamp): $25</strong> — Tennessee state maximum</li>
-            <li><strong>Travel Fee:</strong> none by default for fixed-location in-person appointments</li>
+            <li><strong>Minimum Travel Fee:</strong> $25</li>
+            <li><strong>Premium Customer-Suggested Location Fee:</strong> +$25 when selected</li>
           </ul>
-          <p class="form-note">The $25 fee applies only to the notarial act. Final timing and location must be confirmed before the appointment is scheduled.</p>
+          <p class="form-note">The $25 fee applies only to the notarial act. In-person requests now include a minimum travel fee for clarity, and premium customer-suggested locations add a separate service charge before any extra mileage review.</p>
         </div>
 
         <div id="pricing-mobile" class="pricing-panel hidden-block">
@@ -237,7 +238,7 @@
         <div id="details-inperson" class="notice-box">
           <p class="section-label">Live service</p>
           <h2>In-person notary service by appointment only.</h2>
-          <p>Use the form below to request a fixed-location appointment. This path is best when travel service is not needed.</p>
+          <p>Use the form below to request a fixed-location appointment. This path now shows the minimum travel fee up front and adds premium service charges only when you choose a customer-suggested meeting point.</p>
         </div>
         <div id="details-mobile" class="notice-box hidden-block">
           <p class="section-label">Live service</p>
@@ -289,7 +290,7 @@
       <div class="container narrow">
         <p class="section-label">Request now</p>
         <h2 id="form-heading">Request an in-person notary appointment.</h2>
-        <p id="form-subheading" class="lead">All fields are required except notes. This path is for fixed-location appointments without travel pricing.</p>
+        <p id="form-subheading" class="lead">All fields are required except notes. This path is for fixed-location appointments with the minimum travel fee shown up front.</p>
 
         <div id="success-box" class="success-box" aria-live="polite">
           <h3>Request received</h3>
@@ -306,7 +307,7 @@
             <input type="hidden" name="service" value="Notary Request" />
             <input type="hidden" id="service_request_type" name="service_request_type" value="In-Person Notary" />
             <input type="hidden" id="submitted_at" name="submitted_at" value="" />
-            <input type="hidden" id="estimate_total" name="estimate_total" value="$25 per stamp" />
+            <input type="hidden" id="estimate_total" name="estimate_total" value="$50 minimum" />
             <input type="hidden" name="_subject" value="Ralwyn Notary Request" />
             <input type="hidden" id="autoresponse" name="_autoresponse" value="Thank you for your notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, confirmation, and next steps." />
 
@@ -344,6 +345,24 @@
                   </select>
                   <p class="field-meta">Choose whether the meeting point is selected by the notary or suggested by the customer.</p>
                 </div>
+
+                <div id="premium-location-fields" class="hidden-block full-span">
+                  <div class="form-grid">
+                    <div class="form-field full-span">
+                      <label for="premium_address">Customer Suggested Location Address</label>
+                      <input id="premium_address" name="premium_address" type="text" />
+                    </div>
+                    <div class="form-field">
+                      <label for="premium_city">City</label>
+                      <input id="premium_city" name="premium_city" type="text" />
+                    </div>
+                    <div class="form-field">
+                      <label for="premium_zip">ZIP code</label>
+                      <input id="premium_zip" name="premium_zip" type="text" />
+                    </div>
+                  </div>
+                </div>
+
                 <div class="form-field">
                   <label for="stamp_count">Number of stamps needed</label>
                   <input id="stamp_count" name="stamp_count" type="number" min="1" value="1" required />
@@ -452,9 +471,11 @@
 
               <div id="summary-inperson" class="is-visible">
                 <div class="summary-line"><span>Notarial act</span><span id="summary-stamp-fee">$25</span></div>
+                <div class="summary-line"><span>Minimum travel fee</span><span>$25</span></div>
                 <div class="summary-line"><span>Appointment location tier</span><span id="summary-location-tier">Select a location tier</span></div>
-                <div class="summary-line summary-total"><span>Current estimate</span><span id="summary-total">$25</span></div>
-                <p class="form-note">The $25 fee applies only to the notarial act. Location tier helps frame whether mileage is expected to stay reduced or move into a premium range before confirmation.</p>
+                <div class="summary-line hidden-block" id="summary-premium-line"><span>Premium service charge</span><span>$25</span></div>
+                <div class="summary-line summary-total"><span>Current estimate</span><span id="summary-total">$50</span></div>
+                <p class="form-note">The $25 fee applies only to the notarial act. Customer-suggested locations add a premium service charge before any extra mileage review.</p>
               </div>
 
               <div id="summary-mobile" class="hidden-block">
@@ -506,13 +527,13 @@
     const serviceConfig = {
       in_person: {
         formHeading: 'Request an in-person notary appointment.',
-        formSubheading: 'All fields are required except notes. This path is for fixed-location appointments without travel pricing.',
+        formSubheading: 'All fields are required except notes. This path shows the minimum travel fee up front for clarity.',
         buttonText: 'Request In-Person Appointment',
         summaryHeading: 'Estimated in-person pricing',
         ackCopy: 'I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until availability is confirmed.',
         autoResponse: 'Thank you for your in-person notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, confirmation, and next steps.',
         successCopy: 'Your in-person notary request has been submitted successfully. We will review your details and follow up shortly from notary.service@ralwyn.com with appointment confirmation.',
-        estimateValue: '$25 per stamp',
+        estimateValue: '$50 minimum',
         requestType: 'In-Person Notary',
         note: 'Submitting this form creates a stored intake record through Formspree for follow-up and confirmation.'
       },
@@ -544,6 +565,9 @@
 
     const state = { current: 'in_person' };
 
+    const STANDARD_LOCATION = 'Notary Location Selected Standard Tier (Reduced Mileage Cost)';
+    const PREMIUM_LOCATION = 'Customer Suggested Location Premium Tier (Increased Mileage Cost)';
+
     const ack = document.getElementById('notaryAck');
     const requestButton = document.getElementById('requestButton');
     const submittedAt = document.getElementById('submitted_at');
@@ -569,9 +593,14 @@
     const mobilePreferredDate = document.getElementById('mobile_preferred_date');
     const mobilePreferredTime = document.getElementById('mobile_preferred_time');
     const meetingLocation = document.getElementById('meeting_location');
+    const premiumLocationFields = document.getElementById('premium-location-fields');
+    const premiumAddress = document.getElementById('premium_address');
+    const premiumCity = document.getElementById('premium_city');
+    const premiumZip = document.getElementById('premium_zip');
 
     const summaryStampFee = document.getElementById('summary-stamp-fee');
     const summaryLocationTier = document.getElementById('summary-location-tier');
+    const summaryPremiumLine = document.getElementById('summary-premium-line');
     const summaryTotal = document.getElementById('summary-total');
     const summaryMobileStampFee = document.getElementById('summary-mobile-stamp-fee');
     const summaryMobileTotal = document.getElementById('summary-mobile-total');
@@ -608,6 +637,18 @@
       } else {
         el.classList.remove('is-visible');
         el.classList.add('hidden-block');
+      }
+    }
+
+    function togglePremiumAddressFields(show) {
+      toggleVisible('premium-location-fields', show);
+      premiumAddress.required = show;
+      premiumCity.required = show;
+      premiumZip.required = show;
+      if (!show) {
+        premiumAddress.value = '';
+        premiumCity.value = '';
+        premiumZip.value = '';
       }
     }
 
@@ -650,11 +691,17 @@
 
     function updateInPersonSummary() {
       const stamps = Math.max(1, parseInt(stampCount.value || '1', 10));
-      const total = stamps * 25;
-      summaryStampFee.textContent = dollars(total);
+      const stampFee = stamps * 25;
+      const minimumTravelFee = 25;
+      const isPremium = meetingLocation.value === PREMIUM_LOCATION;
+      const premiumServiceCharge = isPremium ? 25 : 0;
+      const total = stampFee + minimumTravelFee + premiumServiceCharge;
+      summaryStampFee.textContent = dollars(stampFee);
       summaryLocationTier.textContent = meetingLocation.value || 'Select a location tier';
+      toggleVisible('summary-premium-line', isPremium);
       summaryTotal.textContent = dollars(total);
-      estimateTotal.value = dollars(total) + ' plus tier-based location review';
+      estimateTotal.value = dollars(total) + (isPremium ? ' before extra mileage review' : ' minimum');
+      togglePremiumAddressFields(isPremium);
     }
 
     function updateMobileSummary() {
@@ -708,6 +755,7 @@
 
       if (mode === 'in_person') updateInPersonSummary();
       if (mode === 'mobile') updateMobileSummary();
+      if (mode !== 'in_person') togglePremiumAddressFields(false);
     }
 
     cardInPerson.addEventListener('click', function(){ applyMode('in_person'); });
