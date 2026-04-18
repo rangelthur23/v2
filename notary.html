@@ -273,13 +273,13 @@
         <h2>Simple remote pricing with premium physical-document options.</h2>
         <h3>Remote Online Notary</h3>
         <ul class="plain-list">
-          <li>$40–$50 per session</li>
+          <li>$50 base session includes up to 5 notarized documents</li>
+          <li>+$10 for each additional group of 5 documents</li>
         </ul>
         <h3>Wet Notarization of a Digitally Signed Copy</h3>
         <ul class="plain-list">
           <li>Additional handling fee: $35</li>
           <li>Overnight shipping and packaging: billed separately</li>
-          <li>Rush processing: +$25–$50 if required</li>
         </ul>
         <h3>Operating Hours</h3>
         <ul class="plain-list">
@@ -359,7 +359,7 @@
           <ul>
             <li>Check your inbox for the auto-confirmation email</li>
             <li>Keep an eye on spam or junk for first-time messages</li>
-            <li>Reply to the confirmation email if you need to add details</li>
+            <li>Your estimated total was recorded with your request for review</li>
           </ul>
         </div>
 
@@ -368,6 +368,7 @@
             <input type="hidden" name="service" value="Notary Appointment Request" />
             <input type="hidden" id="submitted_at" name="submitted_at" value="" />
             <input type="hidden" id="estimated_total" name="estimated_total" value="$50" />
+            <input type="hidden" id="document_fee_total" name="document_fee_total" value="$0" />
             <input type="hidden" name="_subject" value="Ralwyn Notary Appointment Request" />
             <input type="hidden" name="_autoresponse" value="Thank you for your notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, pricing, and next steps. By submitting this request, you confirmed that your document is eligible for remote notarization and, if requested, that a printed and wet notarized copy will be accepted by the receiving party." />
 
@@ -398,7 +399,15 @@
               </div>
               <div class="form-field">
                 <label for="document_count">Number of documents</label>
-                <input id="document_count" name="document_count" type="number" min="1" required />
+                <select id="document_count" name="document_count" required>
+                  <option value="">Select one</option>
+                  <option value="1-5 documents (included)" data-doc-fee="0">1–5 documents (included)</option>
+                  <option value="6-10 documents (+$10)" data-doc-fee="10">6–10 documents (+$10)</option>
+                  <option value="11-15 documents (+$20)" data-doc-fee="20">11–15 documents (+$20)</option>
+                  <option value="16-20 documents (+$30)" data-doc-fee="30">16–20 documents (+$30)</option>
+                  <option value="21-25 documents (+$40)" data-doc-fee="40">21–25 documents (+$40)</option>
+                </select>
+                <p class="field-meta">Base session includes up to 5 notarized documents.</p>
               </div>
               <div class="form-field">
                 <label for="urgency">Urgency</label>
@@ -466,8 +475,9 @@
 
             <div class="summary-box">
               <h3>Estimated Pricing Summary</h3>
-              <p class="form-note">Pricing updates automatically based on your selections.</p>
+              <p class="form-note">Pricing updates automatically based on your selections. The final estimated total will be included with your submitted request.</p>
               <div class="summary-line"><span>Base remote session</span><span id="summary-base">$50</span></div>
+              <div class="summary-line"><span>Additional document tier</span><span id="summary-documents">$0</span></div>
               <div class="summary-line"><span>Same-day urgency</span><span id="summary-urgency">$0</span></div>
               <div class="summary-line"><span>Outside business hours</span><span id="summary-hours">$0</span></div>
               <div class="summary-line"><span>Weekend appointment</span><span id="summary-weekend">$0</span></div>
@@ -486,7 +496,7 @@
               </label>
             </div>
 
-            <p class="form-note">Submitting this form creates a stored record with timestamp and acknowledgment through the Formspree intake.</p>
+            <p class="form-note">Submitting this form creates a stored record with timestamp, acknowledgment, and estimated pricing through the Formspree intake.</p>
 
             <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Submit Notary Request</button>
           </form>
@@ -517,12 +527,14 @@
     const submittedAt = document.getElementById('submitted_at');
     const preferredTime = document.getElementById('preferred_time');
     const preferredDate = document.getElementById('preferred_date');
+    const documentCount = document.getElementById('document_count');
     const urgency = document.getElementById('urgency');
     const outsideHours = document.getElementById('outside_hours');
     const weekend = document.getElementById('weekend');
     const wetCopy = document.getElementById('wet_copy');
     const overnight = document.getElementById('overnight');
     const witness = document.getElementById('witness');
+    const summaryDocuments = document.getElementById('summary-documents');
     const summaryUrgency = document.getElementById('summary-urgency');
     const summaryHours = document.getElementById('summary-hours');
     const summaryWeekend = document.getElementById('summary-weekend');
@@ -536,6 +548,7 @@
     const successBox = document.getElementById('success-box');
     const notaryForm = document.getElementById('notary-form');
     const estimatedTotalInput = document.getElementById('estimated_total');
+    const documentFeeTotalInput = document.getElementById('document_fee_total');
     const bookSection = document.getElementById('book-now');
 
     submittedAt.value = new Date().toISOString();
@@ -552,8 +565,15 @@
       return '$' + amount;
     }
 
+    function getDocumentFee() {
+      const option = documentCount.options[documentCount.selectedIndex];
+      if (!option) return 0;
+      return parseInt(option.dataset.docFee || '0', 10);
+    }
+
     function updateSummary() {
       let total = 50;
+      let documentFee = getDocumentFee();
       let urgencyFee = 0;
       let hoursFee = 0;
       let weekendFee = 0;
@@ -566,8 +586,9 @@
       if (wetCopy.value.includes('+$35')) wetFee = 35;
       if (witness.value.includes('+$25')) witnessFee = 25;
 
-      total += urgencyFee + hoursFee + weekendFee + wetFee + witnessFee;
+      total += documentFee + urgencyFee + hoursFee + weekendFee + wetFee + witnessFee;
 
+      summaryDocuments.textContent = dollars(documentFee);
       summaryUrgency.textContent = dollars(urgencyFee);
       summaryHours.textContent = dollars(hoursFee);
       summaryWeekend.textContent = dollars(weekendFee);
@@ -576,6 +597,7 @@
       summaryOvernight.textContent = overnight.value.startsWith('Yes') ? 'Billed separately' : '$0';
       summaryTotal.textContent = dollars(total);
       estimatedTotalInput.value = dollars(total);
+      documentFeeTotalInput.value = dollars(documentFee);
     }
 
     function validatePreferredTime() {
@@ -664,7 +686,7 @@
       updateSummary();
     });
 
-    [urgency, outsideHours, weekend, wetCopy, overnight, witness].forEach(function (field) {
+    [documentCount, urgency, outsideHours, weekend, wetCopy, overnight, witness].forEach(function (field) {
       field.addEventListener('change', updateSummary);
     });
 
@@ -675,6 +697,7 @@
       formError.hidden = true;
       formError.textContent = '';
       validatePreferredTime();
+      updateSummary();
 
       if (!notaryForm.reportValidity()) {
         formError.hidden = false;
