@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://ralwyn.com/</loc>
   </url>
+
   <url>
     <loc>https://ralwyn.com/notary.html</loc>
   </url>
+
   <url>
     <loc>https://ralwyn.com/faq.html</loc>
   </url>
+
   <url>
     <loc>https://ralwyn.com/about.html</loc>
   </url>
+
   <url>
     <loc>https://ralwyn.com/services.html</loc>
   </url>
+
 </urlset>
