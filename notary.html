@@ -3,83 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notary Services | Ralwyn</title>
-  <meta name="description" content="Fast, reliable remote online notary services with optional wet notarization and overnight document handling." />
+  <title>Tennessee Notary Services | In-Person Notary and Remote Online Notary Coming Soon | Ralwyn</title>
+  <meta name="description" content="Book in-person notary appointments in Tennessee with transparent per-stamp pricing and travel fees. Remote online notary service is coming soon pending Tennessee approval." />
   <meta name="theme-color" content="#0f172a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="canonical" href="https://ralwyn.com/notary.html" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Tennessee Notary Services","provider":{"@type":"LocalBusiness","name":"Ralwyn","url":"https://ralwyn.com"},"serviceType":"In-person notary services with remote online notary coming soon","areaServed":["Tennessee"],"offers":[{"@type":"Offer","name":"In-Person Notary by Appointment"},{"@type":"Offer","name":"Remote Online Notary Waitlist"}]}</script>
   <style>
-    .ack-box,
+    .notice-box,
     .form-shell,
     .summary-box,
     .success-box,
     .process-box,
-    .pricing-cta-box,
-    .prefill-box {
+    .service-switcher,
+    .pricing-panel,
+    .coming-soon-box {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1rem 1.1rem;
       background: linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(9, 9, 9, 0.98));
       margin-top: 1rem;
     }
-
-    .prefill-box {
-      display: none;
-      border-color: rgba(201, 167, 91, 0.28);
+    .coming-soon-box {
+      border-color: rgba(201, 167, 91, 0.34);
     }
-
-    .prefill-box.is-visible {
-      display: block;
-    }
-
-    .ack-row {
-      display: flex;
+    .service-switcher {
+      display: grid;
       gap: 0.75rem;
-      align-items: flex-start;
+    }
+    .switcher-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .switcher-card {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+    }
+    .switcher-card.is-active {
+      border-color: rgba(201, 167, 91, 0.45);
+      box-shadow: 0 0 0 1px rgba(201, 167, 91, 0.18);
+    }
+    .switcher-card h3 { margin-bottom: 0.4rem; }
+    .switcher-card p, .switcher-card li, .notice-box p, .pricing-panel p, .summary-box p, .success-box p, .process-box p, .coming-soon-box p {
       color: var(--muted);
     }
-
-    .ack-row input {
-      margin-top: 0.2rem;
-      accent-color: var(--accent);
+    .switcher-card ul, .process-box ul, .success-box ul, .pricing-panel ul {
+      margin: 0.55rem 0 0;
+      padding-left: 1.15rem;
+      color: var(--muted);
     }
-
-    .button[aria-disabled="true"] {
-      opacity: 0.45;
-      pointer-events: none;
-      cursor: not-allowed;
-    }
-
-    .notary-form {
-      display: grid;
-      gap: 1rem;
-    }
-
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
     }
-
     .form-field {
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
     }
-
     .form-field label {
       color: var(--text);
       font-weight: 600;
     }
-
-    .field-meta {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: -0.15rem;
-    }
-
     .form-field input,
     .form-field select,
     .form-field textarea {
@@ -91,30 +84,17 @@
       color: var(--text);
       font: inherit;
     }
-
     .form-field textarea {
       min-height: 130px;
       resize: vertical;
     }
-
-    .form-note {
+    .field-meta, .form-note {
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 0.4rem;
+      font-size: 0.92rem;
     }
-
-    .full-span {
-      grid-column: 1 / -1;
-    }
-
-    .summary-box h3,
-    .success-box h3,
-    .process-box h3,
-    .pricing-cta-box h3,
-    .prefill-box h3 {
-      margin-bottom: 0.75rem;
-    }
-
+    .full-span { grid-column: 1 / -1; }
+    .hidden-block { display: none; }
+    .hidden-block.is-visible { display: block; }
     .summary-line {
       display: flex;
       justify-content: space-between;
@@ -122,7 +102,6 @@
       color: var(--muted);
       padding: 0.22rem 0;
     }
-
     .summary-total {
       margin-top: 0.75rem;
       padding-top: 0.75rem;
@@ -130,89 +109,29 @@
       font-weight: 800;
       color: var(--text);
     }
-
-    .summary-alert,
-    .form-error {
+    .form-error, .summary-alert {
       margin-top: 0.75rem;
       color: #f5c16c;
       font-weight: 600;
     }
-
-    .success-box {
-      display: none;
-      border-color: rgba(201, 167, 91, 0.35);
-      box-shadow: 0 0 0 1px rgba(201, 167, 91, 0.12), 0 10px 30px rgba(0, 0, 0, 0.28);
-    }
-
-    .success-box.is-visible {
-      display: block;
-    }
-
-    .success-box p,
-    .process-box p,
-    .pricing-cta-box p,
-    .prefill-box p {
-      color: var(--muted);
-    }
-
-    .process-box ul,
-    .success-box ul {
-      margin: 0.75rem 0 0;
-      padding-left: 1.15rem;
-      color: var(--muted);
-    }
-
-    .pricing-cta-box {
+    .ack-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-top: 1.5rem;
+      gap: 0.75rem;
+      align-items: flex-start;
+      color: var(--muted);
     }
-
-    .pricing-cta-box .button {
-      flex-shrink: 0;
+    .ack-row input { margin-top: 0.2rem; accent-color: var(--accent); }
+    .success-box { display: none; border-color: rgba(201, 167, 91, 0.35); }
+    .success-box.is-visible { display: block; }
+    .button[aria-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+      cursor: not-allowed;
     }
-
-    .form-shell.is-highlighted {
-      border-color: rgba(201, 167, 91, 0.5);
-      box-shadow: 0 0 0 1px rgba(201, 167, 91, 0.18), 0 18px 50px rgba(0, 0, 0, 0.34);
-      transition: box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .sticky-cta {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: none;
-      padding: 0.75rem;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      z-index: 999;
-    }
-
-    .sticky-cta .button {
-      width: 100%;
-    }
-
-    body.has-sticky-cta {
-      padding-bottom: 5.5rem;
-    }
-
     @media (max-width: 860px) {
+      .switcher-options,
       .form-grid {
         grid-template-columns: 1fr;
-      }
-
-      .pricing-cta-box {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .sticky-cta {
-        display: block;
       }
     }
   </style>
@@ -227,6 +146,7 @@
         <a href="about.html">About</a>
         <a href="services.html">Services</a>
         <a href="notary.html" aria-current="page">Notary</a>
+        <a href="faq.html">FAQ</a>
         <a href="index.html#contact">Contact</a>
       </nav>
     </div>
@@ -235,10 +155,10 @@
   <main>
     <section class="page-hero">
       <div class="container narrow">
-        <p class="eyebrow">Notary Services</p>
-        <h1 class="page-title">Remote-first notarization with clear premium add-ons.</h1>
+        <p class="eyebrow">Tennessee notary services</p>
+        <h1 class="page-title">In-person notary appointments live. Remote online notary coming soon.</h1>
         <p class="lead">
-          Ralwyn offers remote online notarization with a structured process, direct communication, and optional wet notarization of a digitally signed document for clients who need a physical notarized copy returned by overnight delivery.
+          Ralwyn currently offers in-person Tennessee notary services by appointment only. Remote Online Notarization (RON) is in progress and will be offered after Tennessee approval is complete.
         </p>
         <div class="hero-actions">
           <a class="button button-primary" href="#book-now">Request Appointment</a>
@@ -248,146 +168,127 @@
     </section>
 
     <section class="section">
-      <div class="container service-stack">
-        <article class="service-panel">
-          <p class="section-label">Primary service</p>
-          <h2>Remote Online Notary</h2>
-          <p>
-            Complete your notarization securely online from wherever you are. This is the core service model and the default path for appointments.
-          </p>
-          <ul class="plain-list">
-            <li>Remote-first operating model</li>
-            <li>Available to Tennessee and Georgia clients, subject to document suitability</li>
-            <li>Secure identity verification and scheduled online session</li>
-            <li>Fast turnaround and clear communication</li>
-          </ul>
-        </article>
-
-        <article class="service-panel">
-          <p class="section-label">Premium add-on</p>
-          <h2>Wet Notarization + Overnight Return</h2>
-          <p>
-            For clients who require a physical notarized copy following a digital workflow, Ralwyn may provide wet notarization of a printed document <strong>where permitted by applicable law and document requirements</strong>.
-          </p>
-          <ul class="plain-list">
-            <li>Available only when document type and workflow are appropriate</li>
-            <li>Physical handling and mailing service billed separately</li>
-            <li>Overnight return available for time-sensitive requests</li>
-            <li>Final availability confirmed during intake</li>
-          </ul>
-        </article>
+      <div class="container narrow">
+        <div class="service-switcher">
+          <p class="section-label">Choose a service path</p>
+          <h2>One page, two clear paths.</h2>
+          <div class="switcher-options">
+            <article id="card-inperson" class="switcher-card is-active" data-service="in_person">
+              <h3>In-Person Notary</h3>
+              <p>Active now. By appointment only.</p>
+              <ul>
+                <li>Monday–Friday, 8:00 AM–4:00 PM</li>
+                <li>No rush service</li>
+                <li>Travel charges confirmed before scheduling</li>
+              </ul>
+            </article>
+            <article id="card-ron" class="switcher-card" data-service="ron_waitlist">
+              <h3>Remote Online Notary</h3>
+              <p>Coming soon pending Tennessee approval.</p>
+              <ul>
+                <li>Join the notification list now</li>
+                <li>No payment or appointment taken yet</li>
+                <li>Interest list helps prioritize launch</li>
+              </ul>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section section-alt" id="pricing">
       <div class="container narrow">
         <p class="section-label">Pricing</p>
-        <h2>Simple remote pricing with premium physical-document options.</h2>
-        <h3>Remote Online Notary</h3>
-        <ul class="plain-list">
-          <li>$50 base session includes up to 5 notarized documents</li>
-          <li>+$10 for each additional group of 5 documents</li>
-        </ul>
-        <h3>Wet Notarization of a Digitally Signed Copy</h3>
-        <ul class="plain-list">
-          <li>Additional handling fee: $35</li>
-          <li>Overnight shipping and packaging: billed separately</li>
-        </ul>
-        <h3>Operating Hours</h3>
-        <ul class="plain-list">
-          <li>Standard hours: Monday–Friday, 8:00 AM – 5:00 PM Eastern</li>
-          <li>After-hours: Any appointment before 8:00 AM, after 5:00 PM, or on weekends</li>
-          <li>Blackout hours: 9:00 PM – 6:00 AM Eastern every day. Requests in this window are not accepted.</li>
-          <li>Appointment requests should be made in 15-minute increments such as 08:15, 13:30, or 20:45</li>
-        </ul>
-        <h3>Add-ons</h3>
-        <ul class="plain-list">
-          <li>Outside business hours: +$25</li>
-          <li>Weekend: +$25</li>
-          <li>Wet notarized mailed copy: +$35 handling</li>
-          <li>Same-day rush: +$25</li>
-          <li>Witness provided: +$25 each</li>
-        </ul>
+        <h2>Transparent Tennessee pricing with the notarial act separated clearly.</h2>
 
-        <div class="pricing-cta-box">
-          <div>
-            <h3>Ready to move forward?</h3>
-            <p>Review pricing, then continue directly to the request form below.</p>
-          </div>
-          <a class="button button-primary" href="#book-now">Continue to Booking</a>
+        <div id="pricing-inperson" class="pricing-panel">
+          <h3>In-Person Notary (Active)</h3>
+          <ul class="plain-list">
+            <li><strong>Notarial Act (Per Stamp): $25</strong> — Tennessee state maximum</li>
+            <li><strong>Travel Fee:</strong> $25 base, including the first mile</li>
+            <li><strong>Additional Mileage:</strong> $1 per mile after the first mile</li>
+          </ul>
+          <p class="form-note">The $25 fee applies only to the notarial act. Travel charges are separate and reflect time, distance, scheduling, and service delivery. Final travel charges are confirmed before the appointment is scheduled.</p>
+          <ul class="plain-list">
+            <li>Business hours: Monday–Friday, 8:00 AM–4:00 PM</li>
+            <li>By appointment only</li>
+            <li>No rush service</li>
+            <li>Appointment confirmation required</li>
+          </ul>
+        </div>
+
+        <div id="pricing-ron" class="coming-soon-box hidden-block">
+          <h3>Remote Online Notary (Coming Soon)</h3>
+          <p>Remote Online Notarization is not yet active. Tennessee approval is in progress.</p>
+          <p><strong>Important:</strong> when remote service launches, the notarial act will remain capped at <strong>$25 per stamp</strong> under Tennessee law. Any additional administrative, technical, identity-verification, or operational charges will be presented separately and clearly before booking.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container narrow">
-        <p class="section-label">Service area</p>
-        <h2>Tennessee-based remote model.</h2>
-        <ul class="plain-list">
-          <li>Tennessee: Remote Online Notary</li>
-          <li>Georgia: Remote Online Notary</li>
-          <li>Physical wet-notarized copy service available by request when appropriate</li>
-        </ul>
-        <p class="lead" style="font-size:0.95rem; max-width: none;">
-          All notarizations are performed in compliance with Tennessee law based on the notary’s physical location at the time of notarization.
-        </p>
+        <div id="inperson-details" class="notice-box">
+          <p class="section-label">Live service</p>
+          <h2>In-person notary service by appointment only.</h2>
+          <p>Use the form below to request an in-person appointment. Include the signing address so travel pricing can be confirmed before the appointment is finalized.</p>
+        </div>
+
+        <div id="ron-details" class="coming-soon-box hidden-block">
+          <p class="section-label">Coming soon</p>
+          <h2>Remote Online Notary is not live yet.</h2>
+          <p>Use the form below to join the waitlist. You will be notified when Tennessee Remote Online Notary service is approved and ready to book.</p>
+        </div>
       </div>
     </section>
 
     <section class="section section-alt">
       <div class="container narrow">
-        <p class="section-label">Client responsibility</p>
-        <h2>Document acceptance and compliance</h2>
-        <p>
-          Clients are responsible for confirming that their documents are eligible for remote notarization and, if requested, that a printed and wet notarized copy will be accepted by the receiving party.
-        </p>
-        <p>
-          Ralwyn provides notarization services in compliance with Tennessee law. Acceptance of notarized documents by third parties, institutions, agencies, or jurisdictions is outside the control of Ralwyn.
-        </p>
+        <p class="section-label">How it works</p>
+        <div id="process-inperson" class="process-box">
+          <h3>In-person workflow</h3>
+          <ul>
+            <li>1. Submit your request with the signing address</li>
+            <li>2. We review availability and confirm travel pricing</li>
+            <li>3. You receive appointment confirmation</li>
+            <li>4. We meet at the confirmed location and complete notarization</li>
+          </ul>
+        </div>
+        <div id="process-ron" class="process-box hidden-block">
+          <h3>Remote online notary launch workflow</h3>
+          <ul>
+            <li>1. Join the waitlist now</li>
+            <li>2. Receive launch notice after Tennessee approval</li>
+            <li>3. Review live pricing and compliance details</li>
+            <li>4. Book a secure video notarization once active</li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <section class="section" id="book-now">
       <div class="container narrow">
-        <p class="section-label">Book now</p>
-        <h2>Request a remote notary appointment.</h2>
-        <p class="lead">
-          Complete the intake form below. Every field is required except notes. Appointment times default to 15-minute increments and are handled in Eastern Time.
-        </p>
-
-        <div id="prefill-box" class="prefill-box">
-          <h3>Estimate carried into booking</h3>
-          <p id="prefill-copy">Your calculator selections have been applied to the form below so you can continue without starting over.</p>
-        </div>
-
-        <div class="process-box">
-          <h3>What happens next</h3>
-          <ul>
-            <li>1. Submit your request</li>
-            <li>2. We confirm availability and final pricing</li>
-            <li>3. You receive next-step instructions and scheduling confirmation</li>
-            <li>4. Your online notarization session is completed securely</li>
-          </ul>
-        </div>
+        <p class="section-label">Request now</p>
+        <h2 id="form-heading">Request an in-person notary appointment.</h2>
+        <p id="form-subheading" class="lead">All fields are required except notes. Travel charges are confirmed after address review.</p>
 
         <div id="success-box" class="success-box" aria-live="polite">
           <h3>Request received</h3>
-          <p>Your notary request has been submitted successfully. We will review your details and follow up shortly from <strong>notary.service@ralwyn.com</strong>.</p>
+          <p id="success-copy">Your request has been submitted successfully. We will review your details and follow up shortly from <strong>notary.service@ralwyn.com</strong>.</p>
           <ul>
             <li>Check your inbox for the auto-confirmation email</li>
             <li>Keep an eye on spam or junk for first-time messages</li>
-            <li>Your estimated total was recorded with your request for review</li>
+            <li>Your request details were recorded for review</li>
           </ul>
         </div>
 
         <div id="form-shell" class="form-shell">
-          <form id="notary-form" class="notary-form" action="https://formspree.io/f/mnjldobl" method="POST">
-            <input type="hidden" name="service" value="Notary Appointment Request" />
+          <form id="notary-form" action="https://formspree.io/f/mnjldobl" method="POST">
+            <input type="hidden" name="service" value="Notary Request" />
+            <input type="hidden" id="service_request_type" name="service_request_type" value="In-Person Notary" />
             <input type="hidden" id="submitted_at" name="submitted_at" value="" />
-            <input type="hidden" id="estimated_total" name="estimated_total" value="$50" />
-            <input type="hidden" id="document_fee_total" name="document_fee_total" value="$0" />
-            <input type="hidden" name="_subject" value="Ralwyn Notary Appointment Request" />
-            <input type="hidden" name="_autoresponse" value="Thank you for your notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, pricing, and next steps. By submitting this request, you confirmed that your document is eligible for remote notarization and, if requested, that a printed and wet notarized copy will be accepted by the receiving party." />
+            <input type="hidden" id="estimate_total" name="estimate_total" value="Pending address review" />
+            <input type="hidden" name="_subject" value="Ralwyn Notary Request" />
+            <input type="hidden" id="autoresponse" name="_autoresponse" value="Thank you for your notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, confirmation, and next steps." />
 
             <div class="form-grid">
               <div class="form-field">
@@ -406,125 +307,115 @@
                 <label for="phone">Phone number</label>
                 <input id="phone" name="phone" type="tel" required />
               </div>
-              <div class="form-field">
-                <label for="location">City and state</label>
-                <input id="location" name="location" type="text" required />
-              </div>
-              <div class="form-field">
+              <div class="form-field full-span">
                 <label for="document_type">Document type</label>
                 <input id="document_type" name="document_type" type="text" required />
               </div>
-              <div class="form-field">
-                <label for="document_count">Number of documents</label>
-                <select id="document_count" name="document_count" required>
-                  <option value="">Select one</option>
-                  <option value="1-5 documents (included)" data-doc-fee="0">1–5 documents (included)</option>
-                  <option value="6-10 documents (+$10)" data-doc-fee="10">6–10 documents (+$10)</option>
-                  <option value="11-15 documents (+$20)" data-doc-fee="20">11–15 documents (+$20)</option>
-                  <option value="16-20 documents (+$30)" data-doc-fee="30">16–20 documents (+$30)</option>
-                  <option value="21-25 documents (+$40)" data-doc-fee="40">21–25 documents (+$40)</option>
-                </select>
-                <p class="field-meta">Base session includes up to 5 notarized documents.</p>
-              </div>
-              <div class="form-field">
-                <label for="urgency">Urgency</label>
-                <select id="urgency" name="urgency" required>
-                  <option value="">Select one</option>
-                  <option value="Flexible">Flexible</option>
-                  <option value="Within 24 hours">Within 24 hours</option>
-                  <option value="Same day (+$25)">Same day (+$25)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="preferred_date">Preferred date</label>
-                <input id="preferred_date" name="preferred_date" type="date" required />
-              </div>
-              <div class="form-field">
-                <label for="preferred_time">Preferred time</label>
-                <input id="preferred_time" name="preferred_time" type="time" step="900" min="06:00" max="20:45" value="08:00" required />
-                <p class="field-meta">Use 15-minute increments only. Times are Eastern. Blackout hours are 9:00 PM–6:00 AM.</p>
-              </div>
-              <div class="form-field">
-                <label for="outside_hours">Outside business hours?</label>
-                <select id="outside_hours" name="outside_hours" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes (+$25)">Yes (+$25)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="weekend">Weekend appointment?</label>
-                <select id="weekend" name="weekend" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes (+$25)">Yes (+$25)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="wet_copy">Wet notarized mailed copy needed?</label>
-                <select id="wet_copy" name="wet_copy" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes (+$35 handling)">Yes (+$35 handling)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="overnight">Overnight return needed?</label>
-                <select id="overnight" name="overnight" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes (shipping billed separately)">Yes (shipping billed separately)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="witness">Witness needed?</label>
-                <select id="witness" name="witness" required>
-                  <option value="">Select one</option>
-                  <option value="No">No</option>
-                  <option value="Yes (+$25 each)">Yes (+$25 each)</option>
-                </select>
-              </div>
-              <div class="form-field full-span">
-                <label for="notes">Additional notes</label>
-                <textarea id="notes" name="notes"></textarea>
+            </div>
+
+            <div id="fields-inperson" class="hidden-block is-visible">
+              <div class="form-grid" style="margin-top:1rem;">
+                <div class="form-field full-span">
+                  <label for="appointment_address">Appointment address</label>
+                  <input id="appointment_address" name="appointment_address" type="text" required />
+                  <p class="field-meta">Used to confirm travel charges before the appointment is finalized.</p>
+                </div>
+                <div class="form-field">
+                  <label for="city">City</label>
+                  <input id="city" name="city" type="text" required />
+                </div>
+                <div class="form-field">
+                  <label for="zip_code">ZIP code</label>
+                  <input id="zip_code" name="zip_code" type="text" required />
+                </div>
+                <div class="form-field">
+                  <label for="stamp_count">Number of stamps needed</label>
+                  <input id="stamp_count" name="stamp_count" type="number" min="1" value="1" required />
+                </div>
+                <div class="form-field">
+                  <label for="preferred_date">Preferred date</label>
+                  <input id="preferred_date" name="preferred_date" type="date" required />
+                </div>
+                <div class="form-field">
+                  <label for="preferred_time">Preferred time</label>
+                  <input id="preferred_time" name="preferred_time" type="time" step="900" min="08:00" max="16:00" value="08:00" required />
+                  <p class="field-meta">Monday–Friday only, 15-minute increments, 8:00 AM–4:00 PM.</p>
+                </div>
+                <div class="form-field">
+                  <label for="id_ready">Will all signers have ID ready?</label>
+                  <select id="id_ready" name="id_ready" required>
+                    <option value="">Select one</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
               </div>
             </div>
 
+            <div id="fields-ron" class="hidden-block">
+              <div class="form-grid" style="margin-top:1rem;">
+                <div class="form-field">
+                  <label for="ron_use_case">What do you expect to use remote notarization for?</label>
+                  <select id="ron_use_case" name="ron_use_case">
+                    <option value="">Select one</option>
+                    <option value="Personal documents">Personal documents</option>
+                    <option value="Business documents">Business documents</option>
+                    <option value="Real estate or lending">Real estate or lending</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="ron_timing">When would you like remote service?</label>
+                  <select id="ron_timing" name="ron_timing">
+                    <option value="">Select one</option>
+                    <option value="As soon as available">As soon as available</option>
+                    <option value="Within 30 days">Within 30 days</option>
+                    <option value="Future only">Future only</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field full-span" style="margin-top:1rem;">
+              <label for="notes">Additional notes</label>
+              <textarea id="notes" name="notes"></textarea>
+            </div>
+
             <div class="summary-box">
-              <h3>Estimated Pricing Summary</h3>
-              <p class="form-note">Pricing updates automatically based on your selections. The final estimated total will be included with your submitted request.</p>
-              <div class="summary-line"><span>Base remote session</span><span id="summary-base">$50</span></div>
-              <div class="summary-line"><span>Additional document tier</span><span id="summary-documents">$0</span></div>
-              <div class="summary-line"><span>Same-day urgency</span><span id="summary-urgency">$0</span></div>
-              <div class="summary-line"><span>Outside business hours</span><span id="summary-hours">$0</span></div>
-              <div class="summary-line"><span>Weekend appointment</span><span id="summary-weekend">$0</span></div>
-              <div class="summary-line"><span>Wet mailed copy</span><span id="summary-wet">$0</span></div>
-              <div class="summary-line"><span>Witness fee</span><span id="summary-witness">$0</span></div>
-              <div class="summary-line"><span>Overnight shipping</span><span id="summary-overnight">Billed separately</span></div>
-              <div class="summary-line summary-total"><span>Estimated total before shipping</span><span id="summary-total">$50</span></div>
+              <h3 id="summary-heading">Estimated in-person pricing</h3>
+              <div id="summary-inperson">
+                <div class="summary-line"><span>Notarial act</span><span id="summary-stamp-fee">$25</span></div>
+                <div class="summary-line"><span>Travel base</span><span>$25</span></div>
+                <div class="summary-line"><span>Additional mileage</span><span>Confirmed after address review</span></div>
+                <div class="summary-line summary-total"><span>Current estimate before extra mileage</span><span id="summary-total">$50</span></div>
+                <p class="form-note">The $25 fee applies only to the notarial act. Travel charges are separate and confirmed before scheduling.</p>
+              </div>
+              <div id="summary-ron" class="hidden-block">
+                <div class="summary-line"><span>Remote Online Notary status</span><span>Coming soon</span></div>
+                <div class="summary-line"><span>Notarial act (when active)</span><span>$25 per stamp</span></div>
+                <div class="summary-line"><span>Additional fees</span><span>Presented separately at launch</span></div>
+                <div class="summary-line summary-total"><span>Current action</span><span>Join waitlist</span></div>
+                <p class="form-note">No remote booking is being taken at this time. This request places you on the notification list only.</p>
+              </div>
               <p id="summary-alert" class="summary-alert" hidden></p>
               <p id="form-error" class="form-error" hidden></p>
             </div>
 
-            <div class="ack-box">
+            <div class="notice-box">
               <label class="ack-row" for="notaryAck">
                 <input type="checkbox" id="notaryAck" name="client_acknowledgment" value="Confirmed" required />
-                <span>I confirm that my document is eligible for remote notarization and, if I request a printed and wet notarized copy, I have confirmed that this format will be accepted by the receiving party.</span>
+                <span id="ack-copy">I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until travel pricing and availability are confirmed.</span>
               </label>
             </div>
 
-            <p class="form-note">Submitting this form creates a stored record with timestamp, acknowledgment, and estimated pricing through the Formspree intake.</p>
+            <p id="form-note" class="form-note">Submitting this form creates a stored intake record through Formspree for follow-up and confirmation.</p>
 
-            <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Submit Notary Request</button>
+            <button id="requestButton" class="button button-primary" type="submit" aria-disabled="true">Request In-Person Appointment</button>
           </form>
         </div>
       </div>
     </section>
   </main>
-
-  <div class="sticky-cta">
-    <a class="button button-primary" href="#book-now">Book Notary Appointment</a>
-  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -535,293 +426,212 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    if (window.innerWidth <= 860) {
-      document.body.classList.add('has-sticky-cta');
-    }
+
+    const serviceConfig = {
+      in_person: {
+        formHeading: 'Request an in-person notary appointment.',
+        formSubheading: 'All fields are required except notes. Travel charges are confirmed after address review.',
+        buttonText: 'Request In-Person Appointment',
+        summaryHeading: 'Estimated in-person pricing',
+        ackCopy: 'I understand that in-person appointments are by request only, that no rush service is offered, and that the appointment is not final until travel pricing and availability are confirmed.',
+        autoResponse: 'Thank you for your in-person notary request. We have received your intake form and will follow up shortly from notary.service@ralwyn.com with availability, confirmation, and next steps.',
+        successCopy: 'Your in-person notary request has been submitted successfully. We will review your details and follow up shortly from notary.service@ralwyn.com with availability and travel confirmation.',
+        estimateValue: 'Pending address review',
+        requestType: 'In-Person Notary',
+        note: 'Submitting this form creates a stored intake record through Formspree for follow-up and confirmation.'
+      },
+      ron_waitlist: {
+        formHeading: 'Join the remote online notary notification list.',
+        formSubheading: 'Remote Online Notary is not active yet. Use this form to be notified when Tennessee approval is complete.',
+        buttonText: 'Join Remote Notary Waitlist',
+        summaryHeading: 'Remote online notary launch summary',
+        ackCopy: 'I understand that Remote Online Notary service is not active yet and that this submission places me on the notification list only. No remote appointment is being booked at this time.',
+        autoResponse: 'Thank you for your interest in Remote Online Notary service. Tennessee approval is still in progress. We have added your information to the notification list and will follow up once remote service is available.',
+        successCopy: 'Your Remote Online Notary interest request has been submitted successfully. We will notify you from notary.service@ralwyn.com when remote service becomes available.',
+        estimateValue: 'RON coming soon',
+        requestType: 'Remote Online Notary Waitlist',
+        note: 'Submitting this form joins the remote online notary waitlist only. No remote booking is being confirmed at this time.'
+      }
+    };
+
+    const serviceState = {
+      current: 'in_person'
+    };
 
     const ack = document.getElementById('notaryAck');
     const requestButton = document.getElementById('requestButton');
     const submittedAt = document.getElementById('submitted_at');
+    const stampCount = document.getElementById('stamp_count');
     const preferredTime = document.getElementById('preferred_time');
     const preferredDate = document.getElementById('preferred_date');
-    const documentCount = document.getElementById('document_count');
-    const urgency = document.getElementById('urgency');
-    const outsideHours = document.getElementById('outside_hours');
-    const weekend = document.getElementById('weekend');
-    const wetCopy = document.getElementById('wet_copy');
-    const overnight = document.getElementById('overnight');
-    const witness = document.getElementById('witness');
-    const summaryDocuments = document.getElementById('summary-documents');
-    const summaryUrgency = document.getElementById('summary-urgency');
-    const summaryHours = document.getElementById('summary-hours');
-    const summaryWeekend = document.getElementById('summary-weekend');
-    const summaryWet = document.getElementById('summary-wet');
-    const summaryWitness = document.getElementById('summary-witness');
-    const summaryOvernight = document.getElementById('summary-overnight');
-    const summaryTotal = document.getElementById('summary-total');
-    const summaryAlert = document.getElementById('summary-alert');
     const formError = document.getElementById('form-error');
+    const summaryAlert = document.getElementById('summary-alert');
     const formShell = document.getElementById('form-shell');
     const successBox = document.getElementById('success-box');
-    const prefillBox = document.getElementById('prefill-box');
-    const prefillCopy = document.getElementById('prefill-copy');
+    const successCopy = document.getElementById('success-copy');
     const notaryForm = document.getElementById('notary-form');
-    const estimatedTotalInput = document.getElementById('estimated_total');
-    const documentFeeTotalInput = document.getElementById('document_fee_total');
-    const bookSection = document.getElementById('book-now');
+    const estimateTotal = document.getElementById('estimate_total');
+    const serviceRequestType = document.getElementById('service_request_type');
+    const autoResponse = document.getElementById('autoresponse');
+    const formHeading = document.getElementById('form-heading');
+    const formSubheading = document.getElementById('form-subheading');
+    const summaryHeading = document.getElementById('summary-heading');
+    const ackCopy = document.getElementById('ack-copy');
+    const formNote = document.getElementById('form-note');
+    const summaryStampFee = document.getElementById('summary-stamp-fee');
+    const summaryTotal = document.getElementById('summary-total');
+    const cardInPerson = document.getElementById('card-inperson');
+    const cardRon = document.getElementById('card-ron');
 
     submittedAt.value = new Date().toISOString();
 
-    function syncButtonState() {
-      if (ack.checked) {
-        requestButton.setAttribute('aria-disabled', 'false');
+    function dollars(value) {
+      return '$' + value;
+    }
+
+    function setRequiredState(containerId, isRequired) {
+      document.querySelectorAll('#' + containerId + ' input, #' + containerId + ' select, #' + containerId + ' textarea').forEach(function(field) {
+        if (isRequired) {
+          field.setAttribute('required', 'required');
+        } else {
+          field.removeAttribute('required');
+          field.setCustomValidity('');
+        }
+      });
+    }
+
+    function toggleVisible(id, shouldShow) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.toggle('is-visible', shouldShow);
+      if (shouldShow) {
+        el.classList.remove('hidden-block');
       } else {
-        requestButton.setAttribute('aria-disabled', 'true');
+        el.classList.add('hidden-block');
+        el.classList.remove('is-visible');
       }
     }
 
-    function dollars(amount) {
-      return '$' + amount;
+    function syncButtonState() {
+      requestButton.setAttribute('aria-disabled', ack.checked ? 'false' : 'true');
     }
 
-    function getDocumentFee() {
-      const option = documentCount.options[documentCount.selectedIndex];
-      if (!option) return 0;
-      return parseInt(option.dataset.docFee || '0', 10);
-    }
-
-    function updateSummary() {
-      let total = 50;
-      let documentFee = getDocumentFee();
-      let urgencyFee = 0;
-      let hoursFee = 0;
-      let weekendFee = 0;
-      let wetFee = 0;
-      let witnessFee = 0;
-
-      if (urgency.value.includes('+$25')) urgencyFee = 25;
-      if (outsideHours.value.includes('+$25')) hoursFee = 25;
-      if (weekend.value.includes('+$25')) weekendFee = 25;
-      if (wetCopy.value.includes('+$35')) wetFee = 35;
-      if (witness.value.includes('+$25')) witnessFee = 25;
-
-      total += documentFee + urgencyFee + hoursFee + weekendFee + wetFee + witnessFee;
-
-      summaryDocuments.textContent = dollars(documentFee);
-      summaryUrgency.textContent = dollars(urgencyFee);
-      summaryHours.textContent = dollars(hoursFee);
-      summaryWeekend.textContent = dollars(weekendFee);
-      summaryWet.textContent = dollars(wetFee);
-      summaryWitness.textContent = dollars(witnessFee);
-      summaryOvernight.textContent = overnight.value.startsWith('Yes') ? 'Billed separately' : '$0';
-      summaryTotal.textContent = dollars(total);
-      estimatedTotalInput.value = dollars(total);
-      documentFeeTotalInput.value = dollars(documentFee);
-    }
-
-    function validatePreferredTime() {
+    function validateInPersonTime() {
+      if (serviceState.current !== 'in_person') {
+        preferredTime.setCustomValidity('');
+        summaryAlert.hidden = true;
+        summaryAlert.textContent = '';
+        return;
+      }
       summaryAlert.hidden = true;
       summaryAlert.textContent = '';
-
       if (!preferredTime.value) {
         preferredTime.setCustomValidity('');
         return;
       }
-
       const parts = preferredTime.value.split(':');
       const hour = parseInt(parts[0], 10);
       const minute = parseInt(parts[1], 10);
-
       if (minute % 15 !== 0) {
-        preferredTime.setCustomValidity('Please use 15-minute increments such as 08:15, 13:30, or 20:45.');
+        preferredTime.setCustomValidity('Please use 15-minute increments such as 08:15, 09:30, or 15:45.');
         return;
       }
-
-      if (hour < 6 || hour > 20 || (hour === 20 && minute > 45)) {
-        preferredTime.setCustomValidity('Blackout hours are 9:00 PM to 6:00 AM Eastern. Please choose a time between 06:00 and 20:45.');
+      if (hour < 8 || hour > 16 || (hour === 16 && minute > 0)) {
+        preferredTime.setCustomValidity('In-person appointments must fall between 8:00 AM and 4:00 PM Monday through Friday.');
         summaryAlert.hidden = false;
-        summaryAlert.textContent = 'Blackout hours are 9:00 PM to 6:00 AM Eastern every day. Please choose a time outside that window.';
+        summaryAlert.textContent = 'Business hours for in-person appointments are Monday–Friday, 8:00 AM–4:00 PM.';
         return;
       }
-
       preferredTime.setCustomValidity('');
     }
 
-    function syncBusinessHourSelections() {
-      if (!preferredTime.value) return;
-      const parts = preferredTime.value.split(':');
-      const hour = parseInt(parts[0], 10);
-      const minute = parseInt(parts[1], 10);
-      const totalMinutes = (hour * 60) + minute;
-      const businessStart = 8 * 60;
-      const businessEnd = 17 * 60;
-
-      if (totalMinutes < businessStart || totalMinutes > businessEnd) {
-        outsideHours.value = 'Yes (+$25)';
-      } else if (!outsideHours.value) {
-        outsideHours.value = 'No';
+    function validateInPersonDate() {
+      if (serviceState.current !== 'in_person') {
+        preferredDate.setCustomValidity('');
+        return;
       }
-
-      if (preferredDate.value) {
-        const chosen = new Date(preferredDate.value + 'T12:00:00');
-        const day = chosen.getDay();
-        if (day === 0 || day === 6) {
-          weekend.value = 'Yes (+$25)';
-        } else if (!weekend.value) {
-          weekend.value = 'No';
-        }
+      if (!preferredDate.value) {
+        preferredDate.setCustomValidity('');
+        return;
       }
-
-      updateSummary();
-    }
-
-    function highlightForm() {
-      formShell.classList.add('is-highlighted');
-      setTimeout(function () {
-        formShell.classList.remove('is-highlighted');
-      }, 2200);
-    }
-
-    function scrollToBooking(event) {
-      const trigger = event.target.closest('a[href="#book-now"]');
-      if (!trigger) return;
-      event.preventDefault();
-      bookSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(highlightForm, 250);
-    }
-
-    function setSelectByValue(selectEl, targetValue) {
-      if (!targetValue) return false;
-      const normalizedTarget = String(targetValue).trim().toLowerCase();
-      const options = Array.from(selectEl.options);
-      const exact = options.find(function(option) {
-        return option.value.trim().toLowerCase() === normalizedTarget;
-      });
-      if (exact) {
-        selectEl.value = exact.value;
-        return true;
-      }
-      return false;
-    }
-
-    function setSelectByFee(selectEl, targetFee) {
-      if (targetFee === null || targetFee === undefined || targetFee === '') return false;
-      const normalizedFee = String(targetFee).trim();
-      const options = Array.from(selectEl.options);
-      const feeMatch = options.find(function(option) {
-        return option.dataset.docFee === normalizedFee || option.value === normalizedFee;
-      });
-      if (feeMatch) {
-        selectEl.value = feeMatch.value;
-        return true;
-      }
-      const positiveMap = {
-        '25': options.find(function(option) { return option.value.includes('+$25'); }),
-        '35': options.find(function(option) { return option.value.includes('+$35'); }),
-        '0': options.find(function(option) { return option.value === 'No' || option.value === 'Flexible' || option.value === 'Within 24 hours' || option.dataset.docFee === '0'; })
-      };
-      if (positiveMap[normalizedFee]) {
-        selectEl.value = positiveMap[normalizedFee].value;
-        return true;
-      }
-      return false;
-    }
-
-    function applyCalculatorPrefill() {
-      const hash = window.location.hash || '';
-      const queryFromHash = hash.includes('?') ? hash.split('?')[1] : '';
-      const searchParams = new URLSearchParams(window.location.search);
-      const hashParams = new URLSearchParams(queryFromHash);
-      const params = new URLSearchParams(searchParams.toString());
-      hashParams.forEach(function(value, key) {
-        params.set(key, value);
-      });
-
-      const estimate = params.get('estimate');
-      const docs = params.get('docs');
-      const urgencyFee = params.get('urgency');
-      const hoursFee = params.get('hours');
-      const weekendFee = params.get('weekend');
-      const wetFee = params.get('wet');
-      const witnessFee = params.get('witness');
-
-      let touched = false;
-
-      if (docs !== null) {
-        touched = setSelectByFee(documentCount, docs) || touched;
-      }
-
-      if (urgencyFee !== null) {
-        if (urgencyFee === '25') {
-          urgency.value = 'Same day (+$25)';
-          touched = true;
-        } else if (!urgency.value) {
-          urgency.value = 'Flexible';
-          touched = true;
-        }
-      }
-
-      if (hoursFee !== null) {
-        outsideHours.value = hoursFee === '25' ? 'Yes (+$25)' : 'No';
-        touched = true;
-      }
-
-      if (weekendFee !== null) {
-        weekend.value = weekendFee === '25' ? 'Yes (+$25)' : 'No';
-        touched = true;
-      }
-
-      if (wetFee !== null) {
-        wetCopy.value = wetFee === '35' ? 'Yes (+$35 handling)' : 'No';
-        touched = true;
-      }
-
-      if (witnessFee !== null) {
-        witness.value = witnessFee === '25' ? 'Yes (+$25 each)' : 'No';
-        touched = true;
-      }
-
-      if (estimate) {
-        estimatedTotalInput.value = estimate;
-        touched = true;
-      }
-
-      if (touched) {
-        updateSummary();
-        prefillCopy.textContent = estimate
-          ? 'Your calculator selections have been applied below. Current carried estimate: ' + estimate + ' before shipping.'
-          : 'Your calculator selections have been applied to the form below so you can continue without starting over.';
-        prefillBox.classList.add('is-visible');
-      }
-    }
-
-    preferredTime.addEventListener('change', function () {
-      validatePreferredTime();
-      syncBusinessHourSelections();
-    });
-
-    preferredDate.addEventListener('change', function () {
-      if (!preferredDate.value) return;
       const chosen = new Date(preferredDate.value + 'T12:00:00');
       const day = chosen.getDay();
       if (day === 0 || day === 6) {
-        weekend.value = 'Yes (+$25)';
+        preferredDate.setCustomValidity('In-person appointments are available Monday through Friday only.');
+        summaryAlert.hidden = false;
+        summaryAlert.textContent = 'Weekend in-person appointments are not offered. Please choose a weekday.';
+        return;
       }
-      updateSummary();
-    });
+      preferredDate.setCustomValidity('');
+    }
 
-    [documentCount, urgency, outsideHours, weekend, wetCopy, overnight, witness].forEach(function (field) {
-      field.addEventListener('change', updateSummary);
-    });
+    function updateInPersonSummary() {
+      const stamps = Math.max(1, parseInt(stampCount.value || '1', 10));
+      const stampFee = stamps * 25;
+      summaryStampFee.textContent = dollars(stampFee);
+      summaryTotal.textContent = dollars(stampFee + 25);
+      estimateTotal.value = dollars(stampFee + 25) + ' before extra mileage';
+    }
 
-    document.addEventListener('click', scrollToBooking);
+    function applyServiceMode(mode) {
+      serviceState.current = mode;
+      const config = serviceConfig[mode];
+      formHeading.textContent = config.formHeading;
+      formSubheading.textContent = config.formSubheading;
+      summaryHeading.textContent = config.summaryHeading;
+      ackCopy.textContent = config.ackCopy;
+      requestButton.textContent = config.buttonText;
+      autoResponse.value = config.autoResponse;
+      serviceRequestType.value = config.requestType;
+      successCopy.innerHTML = config.successCopy;
+      formNote.textContent = config.note;
+      estimateTotal.value = config.estimateValue;
 
-    notaryForm.addEventListener('submit', async function (event) {
+      cardInPerson.classList.toggle('is-active', mode === 'in_person');
+      cardRon.classList.toggle('is-active', mode === 'ron_waitlist');
+
+      toggleVisible('fields-inperson', mode === 'in_person');
+      toggleVisible('fields-ron', mode === 'ron_waitlist');
+      toggleVisible('summary-inperson', mode === 'in_person');
+      toggleVisible('summary-ron', mode === 'ron_waitlist');
+      toggleVisible('pricing-inperson', mode === 'in_person');
+      toggleVisible('pricing-ron', mode === 'ron_waitlist');
+      toggleVisible('inperson-details', mode === 'in_person');
+      toggleVisible('ron-details', mode === 'ron_waitlist');
+      toggleVisible('process-inperson', mode === 'in_person');
+      toggleVisible('process-ron', mode === 'ron_waitlist');
+
+      setRequiredState('fields-inperson', mode === 'in_person');
+      setRequiredState('fields-ron', mode === 'ron_waitlist');
+
+      if (mode === 'in_person') {
+        updateInPersonSummary();
+      } else {
+        summaryAlert.hidden = true;
+        summaryAlert.textContent = '';
+      }
+    }
+
+    cardInPerson.addEventListener('click', function() { applyServiceMode('in_person'); });
+    cardRon.addEventListener('click', function() { applyServiceMode('ron_waitlist'); });
+    ack.addEventListener('change', syncButtonState);
+    stampCount.addEventListener('input', updateInPersonSummary);
+    preferredTime.addEventListener('change', validateInPersonTime);
+    preferredDate.addEventListener('change', validateInPersonDate);
+
+    notaryForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       formError.hidden = true;
       formError.textContent = '';
-      validatePreferredTime();
-      updateSummary();
+      summaryAlert.hidden = true;
+      summaryAlert.textContent = '';
+      submittedAt.value = new Date().toISOString();
+
+      if (serviceState.current === 'in_person') {
+        validateInPersonDate();
+        validateInPersonTime();
+        updateInPersonSummary();
+      }
 
       if (!notaryForm.reportValidity()) {
         formError.hidden = false;
@@ -836,15 +646,9 @@
         const response = await fetch(notaryForm.action, {
           method: 'POST',
           body: new FormData(notaryForm),
-          headers: {
-            'Accept': 'application/json'
-          }
+          headers: { 'Accept': 'application/json' }
         });
-
-        if (!response.ok) {
-          throw new Error('Submission failed');
-        }
-
+        if (!response.ok) throw new Error('Submission failed');
         formShell.style.display = 'none';
         successBox.classList.add('is-visible');
         successBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -852,20 +656,19 @@
         formError.hidden = false;
         formError.textContent = 'We could not submit your request right now. Please try again in a moment.';
         requestButton.disabled = false;
-        requestButton.textContent = 'Submit Notary Request';
+        requestButton.textContent = serviceConfig[serviceState.current].buttonText;
       }
     });
 
-    ack.addEventListener('change', syncButtonState);
-    syncButtonState();
-    applyCalculatorPrefill();
-    validatePreferredTime();
-    syncBusinessHourSelections();
-    updateSummary();
+    document.querySelectorAll('a[href="#book-now"]').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('book-now').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
 
-    if (window.location.hash === '#book-now' || window.location.hash.startsWith('#book-now?')) {
-      setTimeout(highlightForm, 300);
-    }
+    syncButtonState();
+    applyServiceMode('in_person');
   </script>
 </body>
 </html>
