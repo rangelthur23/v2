@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notary Pricing Calculator | Ralwyn</title>
+  <meta name="description" content="Estimate remote online notary pricing based on document count, scheduling, and add-on services before you submit your request." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="canonical" href="https://ralwyn.com/notary-pricing-calculator.html" />
+  <style>
+    .calculator-shell,
+    .calculator-summary,
+    .calculator-notes {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem;
+      background: linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(9, 9, 9, 0.98));
+      margin-top: 1rem;
+    }
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .calculator-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .calculator-field label {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .calculator-field input,
+    .calculator-field select {
+      width: 100%;
+      padding: 0.85rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #111111;
+      color: var(--text);
+      font: inherit;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.25rem 0;
+      color: var(--muted);
+    }
+    .summary-total {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 800;
+      color: var(--text);
+    }
+    .calculator-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+    @media (max-width: 860px) {
+      .calculator-grid {
+        grid-template-columns: 1fr;
+      }
+      .calculator-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand brand-logo-only" href="index.html" aria-label="Ralwyn home">
+        <img src="assets/UpdatedLogo.png" alt="Ralwyn logo" class="logo" />
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="notary.html">Notary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="eyebrow">Pricing calculator</p>
+        <h1 class="page-title">Estimate your notary pricing before you book.</h1>
+        <p class="lead">
+          Use this calculator to estimate your remote online notary total based on document count, timing, and selected add-ons. This estimate is designed to match the current Ralwyn intake structure before shipping.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#calculator">Start estimate</a>
+          <a class="button button-secondary" href="notary.html#pricing">View full pricing details</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="calculator">
+      <div class="container narrow">
+        <p class="section-label">Estimate builder</p>
+        <h2>Adjust your options and watch the total update automatically.</h2>
+
+        <div class="calculator-shell">
+          <div class="calculator-grid">
+            <div class="calculator-field">
+              <label for="calc-docs">Document count</label>
+              <select id="calc-docs">
+                <option value="0">1–5 documents (included)</option>
+                <option value="10">6–10 documents (+$10)</option>
+                <option value="20">11–15 documents (+$20)</option>
+                <option value="30">16–20 documents (+$30)</option>
+                <option value="40">21–25 documents (+$40)</option>
+              </select>
+            </div>
+            <div class="calculator-field">
+              <label for="calc-urgency">Urgency</label>
+              <select id="calc-urgency">
+                <option value="0">Flexible</option>
+                <option value="0">Within 24 hours</option>
+                <option value="25">Same day (+$25)</option>
+              </select>
+            </div>
+            <div class="calculator-field">
+              <label for="calc-hours">Outside business hours</label>
+              <select id="calc-hours">
+                <option value="0">No</option>
+                <option value="25">Yes (+$25)</option>
+              </select>
+            </div>
+            <div class="calculator-field">
+              <label for="calc-weekend">Weekend appointment</label>
+              <select id="calc-weekend">
+                <option value="0">No</option>
+                <option value="25">Yes (+$25)</option>
+              </select>
+            </div>
+            <div class="calculator-field">
+              <label for="calc-wet">Wet mailed copy</label>
+              <select id="calc-wet">
+                <option value="0">No</option>
+                <option value="35">Yes (+$35)</option>
+              </select>
+            </div>
+            <div class="calculator-field">
+              <label for="calc-witness">Witness needed</label>
+              <select id="calc-witness">
+                <option value="0">No</option>
+                <option value="25">Yes (+$25)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="calculator-summary">
+          <h3>Estimated summary</h3>
+          <div class="summary-line"><span>Base remote session</span><span>$50</span></div>
+          <div class="summary-line"><span>Additional document tier</span><span id="sum-docs">$0</span></div>
+          <div class="summary-line"><span>Urgency</span><span id="sum-urgency">$0</span></div>
+          <div class="summary-line"><span>Outside business hours</span><span id="sum-hours">$0</span></div>
+          <div class="summary-line"><span>Weekend appointment</span><span id="sum-weekend">$0</span></div>
+          <div class="summary-line"><span>Wet mailed copy</span><span id="sum-wet">$0</span></div>
+          <div class="summary-line"><span>Witness fee</span><span id="sum-witness">$0</span></div>
+          <div class="summary-line"><span>Overnight shipping</span><span>Billed separately</span></div>
+          <div class="summary-line summary-total"><span>Estimated total before shipping</span><span id="sum-total">$50</span></div>
+          <div class="calculator-actions">
+            <a id="continue-link" class="button button-primary" href="notary.html#book-now">Continue to booking</a>
+            <a class="button button-secondary" href="tennessee-notary-cost.html">Read the Tennessee cost guide</a>
+          </div>
+        </div>
+
+        <div class="calculator-notes">
+          <h3>How the automation works</h3>
+          <p class="contact-note">
+            This calculator updates the estimate instantly as you change options. The continue button also carries your estimate into the booking flow path so the next step stays aligned with what you just reviewed.
+          </p>
+          <p class="contact-note">
+            Final pricing still depends on request details, document suitability, and any circumstances not reflected in this quick estimate.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Ralwyn. All rights reserved.</p>
+      <p class="footer-note">Clarity. Structure. Progress.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const fields = {
+      docs: document.getElementById('calc-docs'),
+      urgency: document.getElementById('calc-urgency'),
+      hours: document.getElementById('calc-hours'),
+      weekend: document.getElementById('calc-weekend'),
+      wet: document.getElementById('calc-wet'),
+      witness: document.getElementById('calc-witness')
+    };
+
+    const outputs = {
+      docs: document.getElementById('sum-docs'),
+      urgency: document.getElementById('sum-urgency'),
+      hours: document.getElementById('sum-hours'),
+      weekend: document.getElementById('sum-weekend'),
+      wet: document.getElementById('sum-wet'),
+      witness: document.getElementById('sum-witness'),
+      total: document.getElementById('sum-total')
+    };
+
+    const continueLink = document.getElementById('continue-link');
+
+    function dollars(n) {
+      return '$' + n;
+    }
+
+    function buildBookingLink(total) {
+      const params = new URLSearchParams({
+        estimate: dollars(total),
+        docs: fields.docs.value,
+        urgency: fields.urgency.value,
+        hours: fields.hours.value,
+        weekend: fields.weekend.value,
+        wet: fields.wet.value,
+        witness: fields.witness.value
+      });
+      continueLink.href = 'notary.html#book-now?' + params.toString();
+    }
+
+    function updateCalc() {
+      const values = {
+        docs: Number(fields.docs.value),
+        urgency: Number(fields.urgency.value),
+        hours: Number(fields.hours.value),
+        weekend: Number(fields.weekend.value),
+        wet: Number(fields.wet.value),
+        witness: Number(fields.witness.value)
+      };
+
+      const total = 50 + values.docs + values.urgency + values.hours + values.weekend + values.wet + values.witness;
+
+      outputs.docs.textContent = dollars(values.docs);
+      outputs.urgency.textContent = dollars(values.urgency);
+      outputs.hours.textContent = dollars(values.hours);
+      outputs.weekend.textContent = dollars(values.weekend);
+      outputs.wet.textContent = dollars(values.wet);
+      outputs.witness.textContent = dollars(values.witness);
+      outputs.total.textContent = dollars(total);
+      buildBookingLink(total);
+    }
+
+    Object.values(fields).forEach(function(field) {
+      field.addEventListener('change', updateCalc);
+    });
+
+    updateCalc();
+  </script>
+</body>
+</html>
