@@ -444,20 +444,77 @@ h3 {
 }
 
 @media (max-width: 860px) {
+  .container,
+  .narrow {
+    width: min(var(--max), calc(100% - 1.5rem));
+  }
+
   .hero,
   .page-hero,
   .section {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .section-header {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin-bottom: 0.85rem;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  .lead {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .panel-card,
+  .card,
+  .service-panel,
+  .contact-card,
+  .profile-copy,
+  .bio-copy {
+    padding: 1.15rem;
+  }
+
+  .cards,
+  .team-grid,
+  .founder-layout,
+  .check-grid,
+  .contact-panel {
+    gap: 0.85rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
   }
 
   .button {
     width: 100%;
     text-align: center;
+    min-height: 50px;
+    padding: 0.88rem 1.1rem;
   }
 
-  .hero-actions {
-    flex-direction: column;
+  .eyebrow,
+  .section-label,
+  .contact-label {
+    margin-bottom: 0.7rem;
+  }
+
+  .footer-inner {
+    min-height: auto;
+    padding: 1rem 0;
+    gap: 0.4rem;
   }
 
   .logo {
