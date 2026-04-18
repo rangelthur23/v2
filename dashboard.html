@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lead Tracking Dashboard | Ralwyn</title>
-  <meta name="description" content="Weekly operating dashboard for tracking traffic, booking flow, and notary lead conversion performance." />
+  <meta name="description" content="Weekly operating dashboard for tracking traffic, booking flow, notary lead conversion performance, and alert thresholds." />
   <meta name="theme-color" content="#0f172a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,19 +18,16 @@
     }
     .dashboard-card,
     .metric-card,
-    .report-card {
+    .report-card,
+    .alert-card {
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       padding: 1.2rem;
       background: linear-gradient(180deg, rgba(18,18,18,0.98), rgba(9,9,9,0.98));
       box-shadow: var(--shadow);
     }
-    .dashboard-card h3,
-    .metric-card h3,
-    .report-card h3 {
-      margin-bottom: 0.85rem;
-    }
-    .input-grid {
+    .input-grid,
+    .threshold-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.9rem;
@@ -76,7 +73,8 @@
     .metric-label,
     .small-note,
     .report-card p,
-    .dashboard-card p {
+    .dashboard-card p,
+    .alert-card p {
       color: var(--muted);
     }
     .actions {
@@ -107,15 +105,28 @@
       color: var(--accent);
       font-weight: 700;
     }
-    .tight-list {
+    .tight-list,
+    .alert-list {
       margin: 0.5rem 0 0;
       padding-left: 1.2rem;
       color: var(--muted);
     }
+    .alert-banner {
+      border-left: 4px solid var(--accent);
+      padding-left: 0.9rem;
+      margin-top: 0.75rem;
+    }
+    .alert-good {
+      color: #8dd3a1;
+    }
+    .alert-bad {
+      color: #f5c16c;
+    }
     @media (max-width: 980px) {
       .dashboard-grid,
       .metrics-grid,
-      .input-grid {
+      .input-grid,
+      .threshold-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -141,8 +152,8 @@
     <section class="page-hero">
       <div class="container narrow">
         <p class="eyebrow">Operating dashboard</p>
-        <h1 class="page-title">Lead tracking and weekly reporting system.</h1>
-        <p class="lead">Enter weekly metrics from Cloudflare Web Analytics, Google Search Console, Google Business Profile, and your booking flow. This dashboard calculates your conversion rates automatically and stores weekly snapshots in your browser.</p>
+        <h1 class="page-title">Lead tracking, weekly reporting, and alerts.</h1>
+        <p class="lead">Enter weekly metrics from Cloudflare Web Analytics, Google Search Console, Google Business Profile, and your booking flow. This dashboard calculates conversion rates automatically, stores weekly snapshots in your browser, and flags issues when performance falls below your thresholds.</p>
       </div>
     </section>
 
@@ -207,12 +218,12 @@
             <h2>Weekly operating rhythm</h2>
             <ul class="tight-list">
               <li>Pull sessions from Cloudflare Web Analytics</li>
-              <li>Pull search clicks/impressions from Google Search Console</li>
+              <li>Pull search clicks or impressions from Google Search Console</li>
               <li>Use calculator uses, booking starts, and form submissions from your site tracking</li>
               <li>Enter booked appointments and completed jobs from your actual operations</li>
               <li>Write one short note about what changed this week</li>
             </ul>
-            <p class="small-note">This page stores its reporting history in your browser using local storage. That makes it simple and private, but it also means you should export CSV periodically for backup.</p>
+            <p class="small-note">This page stores reporting history and alert thresholds in your browser using local storage. Export CSV periodically for backup.</p>
           </div>
         </div>
 
@@ -236,6 +247,43 @@
             <p class="metric-label">Revenue per completed job</p>
             <p id="metricRevenuePerJob" class="metric-value">$0</p>
             <p class="small-note">Gross revenue ÷ completed jobs</p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid" style="margin-top: 1rem;">
+          <div class="alert-card">
+            <p class="section-label">Alert thresholds</p>
+            <h2>Set your minimum acceptable conversion levels.</h2>
+            <div class="threshold-grid">
+              <div class="field">
+                <label for="thresholdCalculatorRate">Min calculator rate (%)</label>
+                <input id="thresholdCalculatorRate" type="number" min="0" step="0.1" value="8" />
+              </div>
+              <div class="field">
+                <label for="thresholdBookingRate">Min booking rate (%)</label>
+                <input id="thresholdBookingRate" type="number" min="0" step="0.1" value="4" />
+              </div>
+              <div class="field">
+                <label for="thresholdSubmissionRate">Min submission rate (%)</label>
+                <input id="thresholdSubmissionRate" type="number" min="0" step="0.1" value="35" />
+              </div>
+              <div class="field">
+                <label for="thresholdRevenuePerJob">Min revenue per job ($)</label>
+                <input id="thresholdRevenuePerJob" type="number" min="0" step="0.01" value="75" />
+              </div>
+            </div>
+            <div class="actions">
+              <button id="saveThresholds" class="button button-primary" type="button">Save thresholds</button>
+              <button id="enableNotifications" class="button button-secondary" type="button">Enable browser alerts</button>
+            </div>
+            <p class="small-note">Browser alerts only work on the device and browser where you enable permission.</p>
+          </div>
+
+          <div class="alert-card">
+            <p class="section-label">Alert output</p>
+            <h2>What needs attention</h2>
+            <div id="alertSummary" class="alert-banner small-note">No alerts yet. Enter metrics and compare them to your thresholds.</div>
+            <ul id="alertList" class="alert-list"></ul>
           </div>
         </div>
 
@@ -283,7 +331,9 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const storageKey = 'ralwyn_weekly_reporting_v1';
+    const storageKey = 'ralwyn_weekly_reporting_v2';
+    const thresholdKey = 'ralwyn_alert_thresholds_v1';
+    const notificationKey = 'ralwyn_notifications_enabled_v1';
 
     const fields = {
       weekLabel: document.getElementById('weekLabel'),
@@ -298,6 +348,13 @@
       weeklyNotes: document.getElementById('weeklyNotes')
     };
 
+    const thresholdFields = {
+      calculatorRate: document.getElementById('thresholdCalculatorRate'),
+      bookingRate: document.getElementById('thresholdBookingRate'),
+      submissionRate: document.getElementById('thresholdSubmissionRate'),
+      revenuePerJob: document.getElementById('thresholdRevenuePerJob')
+    };
+
     const outputs = {
       calculatorRate: document.getElementById('metricCalculatorRate'),
       bookingRate: document.getElementById('metricBookingRate'),
@@ -305,16 +362,22 @@
       revenuePerJob: document.getElementById('metricRevenuePerJob'),
       weeklySummary: document.getElementById('weeklySummary'),
       historyBody: document.getElementById('historyBody'),
-      statusLine: document.getElementById('statusLine')
+      statusLine: document.getElementById('statusLine'),
+      alertSummary: document.getElementById('alertSummary'),
+      alertList: document.getElementById('alertList')
     };
 
     function num(value) {
       return Number(value || 0);
     }
 
+    function pctValue(numerator, denominator) {
+      if (!denominator) return 0;
+      return (numerator / denominator) * 100;
+    }
+
     function pct(numerator, denominator) {
-      if (!denominator) return '0%';
-      return ((numerator / denominator) * 100).toFixed(1) + '%';
+      return pctValue(numerator, denominator).toFixed(1) + '%';
     }
 
     function money(value) {
@@ -336,21 +399,114 @@
       };
     }
 
+    function loadThresholds() {
+      try {
+        return JSON.parse(localStorage.getItem(thresholdKey)) || {
+          calculatorRate: 8,
+          bookingRate: 4,
+          submissionRate: 35,
+          revenuePerJob: 75
+        };
+      } catch (error) {
+        return {
+          calculatorRate: 8,
+          bookingRate: 4,
+          submissionRate: 35,
+          revenuePerJob: 75
+        };
+      }
+    }
+
+    function saveThresholds() {
+      const thresholds = {
+        calculatorRate: num(thresholdFields.calculatorRate.value),
+        bookingRate: num(thresholdFields.bookingRate.value),
+        submissionRate: num(thresholdFields.submissionRate.value),
+        revenuePerJob: num(thresholdFields.revenuePerJob.value)
+      };
+      localStorage.setItem(thresholdKey, JSON.stringify(thresholds));
+      outputs.statusLine.textContent = 'Alert thresholds saved.';
+      renderMetrics();
+    }
+
+    function hydrateThresholds() {
+      const thresholds = loadThresholds();
+      thresholdFields.calculatorRate.value = thresholds.calculatorRate;
+      thresholdFields.bookingRate.value = thresholds.bookingRate;
+      thresholdFields.submissionRate.value = thresholds.submissionRate;
+      thresholdFields.revenuePerJob.value = thresholds.revenuePerJob;
+    }
+
+    function maybeNotify(alerts) {
+      const enabled = localStorage.getItem(notificationKey) === 'true';
+      if (!enabled || !alerts.length || typeof Notification === 'undefined') return;
+      if (Notification.permission !== 'granted') return;
+      const body = alerts.slice(0, 3).join(' | ');
+      new Notification('Ralwyn dashboard alert', { body: body });
+    }
+
+    function buildAlerts(data) {
+      const thresholds = loadThresholds();
+      const calculatorRate = pctValue(data.calculatorUsed, data.sessions);
+      const bookingRate = pctValue(data.bookingStarted, data.sessions);
+      const submissionRate = pctValue(data.formSubmitted, data.bookingStarted);
+      const revenuePerJob = data.completedJobs ? data.grossRevenue / data.completedJobs : 0;
+      const alerts = [];
+
+      if (calculatorRate < thresholds.calculatorRate) {
+        alerts.push('Calculator rate is below threshold. This usually points to weak pricing visibility or CTA friction.');
+      }
+      if (bookingRate < thresholds.bookingRate) {
+        alerts.push('Booking start rate is below threshold. Review hero copy, trust signals, and pricing placement.');
+      }
+      if (submissionRate < thresholds.submissionRate) {
+        alerts.push('Submission rate is below threshold. That usually means form friction or pricing hesitation.');
+      }
+      if (revenuePerJob < thresholds.revenuePerJob) {
+        alerts.push('Revenue per completed job is below threshold. Review pricing structure or low-value request mix.');
+      }
+      if (!alerts.length) {
+        alerts.push('No threshold alerts. Current inputs are meeting or exceeding your minimum targets.');
+      }
+      return alerts;
+    }
+
+    function renderAlerts(data) {
+      const alerts = buildAlerts(data);
+      const hasNegative = alerts.some(function(alert) {
+        return !alert.startsWith('No threshold alerts');
+      });
+      outputs.alertSummary.textContent = hasNegative
+        ? 'Attention needed: one or more operating metrics are below your minimum threshold.'
+        : 'All tracked metrics are currently meeting or exceeding your saved thresholds.';
+      outputs.alertSummary.className = 'alert-banner small-note ' + (hasNegative ? 'alert-bad' : 'alert-good');
+      outputs.alertList.innerHTML = alerts.map(function(alert) {
+        return '<li>' + alert + '</li>';
+      }).join('');
+      maybeNotify(hasNegative ? alerts : []);
+    }
+
     function renderMetrics() {
       const data = currentSnapshot();
-      outputs.calculatorRate.textContent = pct(data.calculatorUsed, data.sessions);
-      outputs.bookingRate.textContent = pct(data.bookingStarted, data.sessions);
-      outputs.submissionRate.textContent = pct(data.formSubmitted, data.bookingStarted);
-      outputs.revenuePerJob.textContent = data.completedJobs ? money(data.grossRevenue / data.completedJobs) : '$0';
+      const calculatorRate = pctValue(data.calculatorUsed, data.sessions);
+      const bookingRate = pctValue(data.bookingStarted, data.sessions);
+      const submissionRate = pctValue(data.formSubmitted, data.bookingStarted);
+      const revenuePerJob = data.completedJobs ? data.grossRevenue / data.completedJobs : 0;
+
+      outputs.calculatorRate.textContent = calculatorRate.toFixed(1) + '%';
+      outputs.bookingRate.textContent = bookingRate.toFixed(1) + '%';
+      outputs.submissionRate.textContent = submissionRate.toFixed(1) + '%';
+      outputs.revenuePerJob.textContent = money(revenuePerJob);
 
       const summary = [
         'Week ending ' + (data.weekLabel || 'not set') + ':',
-        data.sessions + ' sessions, ' + data.calculatorUsed + ' calculator uses (' + pct(data.calculatorUsed, data.sessions) + '), ' + data.bookingStarted + ' booking starts (' + pct(data.bookingStarted, data.sessions) + ').',
-        data.formSubmitted + ' submissions (' + pct(data.formSubmitted, data.bookingStarted) + ' of booking starts), ' + data.bookedAppointments + ' booked appointments, ' + data.completedJobs + ' completed jobs.',
-        'Gross revenue: ' + money(data.grossRevenue) + '. Revenue per completed job: ' + (data.completedJobs ? money(data.grossRevenue / data.completedJobs) : '$0') + '.',
+        data.sessions + ' sessions, ' + data.calculatorUsed + ' calculator uses (' + calculatorRate.toFixed(1) + '%), ' + data.bookingStarted + ' booking starts (' + bookingRate.toFixed(1) + '%).',
+        data.formSubmitted + ' submissions (' + submissionRate.toFixed(1) + '% of booking starts), ' + data.bookedAppointments + ' booked appointments, ' + data.completedJobs + ' completed jobs.',
+        'Gross revenue: ' + money(data.grossRevenue) + '. Revenue per completed job: ' + money(revenuePerJob) + '.',
         data.weeklyNotes ? 'Weekly note: ' + data.weeklyNotes : 'Weekly note: none entered yet.'
       ];
       outputs.weeklySummary.textContent = summary.join(' ');
+      renderAlerts(data);
     }
 
     function loadHistory() {
@@ -407,6 +563,7 @@
       saveHistory(history);
       renderHistory();
       outputs.statusLine.textContent = 'Saved weekly snapshot for ' + snapshot.weekLabel + '.';
+      renderAlerts(snapshot);
     }
 
     function exportCsv() {
@@ -441,14 +598,36 @@
       outputs.statusLine.textContent = 'Saved history cleared from this browser.';
     }
 
+    async function enableNotifications() {
+      if (typeof Notification === 'undefined') {
+        outputs.statusLine.textContent = 'Browser notifications are not supported on this device or browser.';
+        return;
+      }
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        localStorage.setItem(notificationKey, 'true');
+        outputs.statusLine.textContent = 'Browser alerts enabled for this device and browser.';
+      } else {
+        localStorage.setItem(notificationKey, 'false');
+        outputs.statusLine.textContent = 'Browser alerts were not enabled.';
+      }
+    }
+
     Object.values(fields).forEach(function(field) {
+      field.addEventListener('input', renderMetrics);
+    });
+
+    Object.values(thresholdFields).forEach(function(field) {
       field.addEventListener('input', renderMetrics);
     });
 
     document.getElementById('saveWeek').addEventListener('click', saveCurrentWeek);
     document.getElementById('exportCsv').addEventListener('click', exportCsv);
     document.getElementById('clearWeeks').addEventListener('click', clearHistory);
+    document.getElementById('saveThresholds').addEventListener('click', saveThresholds);
+    document.getElementById('enableNotifications').addEventListener('click', enableNotifications);
 
+    hydrateThresholds();
     fields.weekLabel.valueAsDate = new Date();
     renderMetrics();
     renderHistory();
