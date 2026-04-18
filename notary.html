@@ -16,12 +16,22 @@
     .summary-box,
     .success-box,
     .process-box,
-    .pricing-cta-box {
+    .pricing-cta-box,
+    .prefill-box {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1rem 1.1rem;
       background: linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(9, 9, 9, 0.98));
       margin-top: 1rem;
+    }
+
+    .prefill-box {
+      display: none;
+      border-color: rgba(201, 167, 91, 0.28);
+    }
+
+    .prefill-box.is-visible {
+      display: block;
     }
 
     .ack-row {
@@ -100,7 +110,8 @@
     .summary-box h3,
     .success-box h3,
     .process-box h3,
-    .pricing-cta-box h3 {
+    .pricing-cta-box h3,
+    .prefill-box h3 {
       margin-bottom: 0.75rem;
     }
 
@@ -139,7 +150,8 @@
 
     .success-box p,
     .process-box p,
-    .pricing-cta-box p {
+    .pricing-cta-box p,
+    .prefill-box p {
       color: var(--muted);
     }
 
@@ -342,6 +354,11 @@
         <p class="lead">
           Complete the intake form below. Every field is required except notes. Appointment times default to 15-minute increments and are handled in Eastern Time.
         </p>
+
+        <div id="prefill-box" class="prefill-box">
+          <h3>Estimate carried into booking</h3>
+          <p id="prefill-copy">Your calculator selections have been applied to the form below so you can continue without starting over.</p>
+        </div>
 
         <div class="process-box">
           <h3>What happens next</h3>
@@ -546,6 +563,8 @@
     const formError = document.getElementById('form-error');
     const formShell = document.getElementById('form-shell');
     const successBox = document.getElementById('success-box');
+    const prefillBox = document.getElementById('prefill-box');
+    const prefillCopy = document.getElementById('prefill-copy');
     const notaryForm = document.getElementById('notary-form');
     const estimatedTotalInput = document.getElementById('estimated_total');
     const documentFeeTotalInput = document.getElementById('document_fee_total');
@@ -671,6 +690,111 @@
       setTimeout(highlightForm, 250);
     }
 
+    function setSelectByValue(selectEl, targetValue) {
+      if (!targetValue) return false;
+      const normalizedTarget = String(targetValue).trim().toLowerCase();
+      const options = Array.from(selectEl.options);
+      const exact = options.find(function(option) {
+        return option.value.trim().toLowerCase() === normalizedTarget;
+      });
+      if (exact) {
+        selectEl.value = exact.value;
+        return true;
+      }
+      return false;
+    }
+
+    function setSelectByFee(selectEl, targetFee) {
+      if (targetFee === null || targetFee === undefined || targetFee === '') return false;
+      const normalizedFee = String(targetFee).trim();
+      const options = Array.from(selectEl.options);
+      const feeMatch = options.find(function(option) {
+        return option.dataset.docFee === normalizedFee || option.value === normalizedFee;
+      });
+      if (feeMatch) {
+        selectEl.value = feeMatch.value;
+        return true;
+      }
+      const positiveMap = {
+        '25': options.find(function(option) { return option.value.includes('+$25'); }),
+        '35': options.find(function(option) { return option.value.includes('+$35'); }),
+        '0': options.find(function(option) { return option.value === 'No' || option.value === 'Flexible' || option.value === 'Within 24 hours' || option.dataset.docFee === '0'; })
+      };
+      if (positiveMap[normalizedFee]) {
+        selectEl.value = positiveMap[normalizedFee].value;
+        return true;
+      }
+      return false;
+    }
+
+    function applyCalculatorPrefill() {
+      const hash = window.location.hash || '';
+      const queryFromHash = hash.includes('?') ? hash.split('?')[1] : '';
+      const searchParams = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(queryFromHash);
+      const params = new URLSearchParams(searchParams.toString());
+      hashParams.forEach(function(value, key) {
+        params.set(key, value);
+      });
+
+      const estimate = params.get('estimate');
+      const docs = params.get('docs');
+      const urgencyFee = params.get('urgency');
+      const hoursFee = params.get('hours');
+      const weekendFee = params.get('weekend');
+      const wetFee = params.get('wet');
+      const witnessFee = params.get('witness');
+
+      let touched = false;
+
+      if (docs !== null) {
+        touched = setSelectByFee(documentCount, docs) || touched;
+      }
+
+      if (urgencyFee !== null) {
+        if (urgencyFee === '25') {
+          urgency.value = 'Same day (+$25)';
+          touched = true;
+        } else if (!urgency.value) {
+          urgency.value = 'Flexible';
+          touched = true;
+        }
+      }
+
+      if (hoursFee !== null) {
+        outsideHours.value = hoursFee === '25' ? 'Yes (+$25)' : 'No';
+        touched = true;
+      }
+
+      if (weekendFee !== null) {
+        weekend.value = weekendFee === '25' ? 'Yes (+$25)' : 'No';
+        touched = true;
+      }
+
+      if (wetFee !== null) {
+        wetCopy.value = wetFee === '35' ? 'Yes (+$35 handling)' : 'No';
+        touched = true;
+      }
+
+      if (witnessFee !== null) {
+        witness.value = witnessFee === '25' ? 'Yes (+$25 each)' : 'No';
+        touched = true;
+      }
+
+      if (estimate) {
+        estimatedTotalInput.value = estimate;
+        touched = true;
+      }
+
+      if (touched) {
+        updateSummary();
+        prefillCopy.textContent = estimate
+          ? 'Your calculator selections have been applied below. Current carried estimate: ' + estimate + ' before shipping.'
+          : 'Your calculator selections have been applied to the form below so you can continue without starting over.';
+        prefillBox.classList.add('is-visible');
+      }
+    }
+
     preferredTime.addEventListener('change', function () {
       validatePreferredTime();
       syncBusinessHourSelections();
@@ -734,11 +858,12 @@
 
     ack.addEventListener('change', syncButtonState);
     syncButtonState();
+    applyCalculatorPrefill();
     validatePreferredTime();
     syncBusinessHourSelections();
     updateSummary();
 
-    if (window.location.hash === '#book-now') {
+    if (window.location.hash === '#book-now' || window.location.hash.startsWith('#book-now?')) {
       setTimeout(highlightForm, 300);
     }
   </script>
