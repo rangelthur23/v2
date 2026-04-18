@@ -87,6 +87,12 @@
       color: var(--text);
       font: inherit;
     }
+    .form-field input:invalid,
+    .form-field select:invalid,
+    .form-field textarea:invalid {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.25);
+    }
     .form-field textarea { min-height: 130px; resize: vertical; }
     .field-meta,
     .form-note { color: var(--muted); font-size: 0.92rem; }
@@ -110,8 +116,8 @@
     .form-error,
     .summary-alert {
       margin-top: 0.75rem;
-      color: #f5c16c;
-      font-weight: 600;
+      color: #dc2626;
+      font-weight: 700;
     }
     .ack-row {
       display: flex;
@@ -374,7 +380,7 @@
                 <div class="form-field">
                   <label for="preferred_time">Preferred time</label>
                   <input id="preferred_time" name="preferred_time" type="time" step="900" min="08:00" max="16:00" value="08:00" required />
-                  <p class="field-meta">Monday–Friday only, 15-minute increments, 8:00 AM–4:00 PM.</p>
+                  <p class="field-meta">Accepted times only: :00, :15, :30, or :45. Business hours are Monday–Friday, 8:00 AM–4:00 PM.</p>
                 </div>
                 <div class="form-field">
                   <label for="id_ready">Will all signers have ID ready?</label>
@@ -413,7 +419,7 @@
                 <div class="form-field">
                   <label for="mobile_preferred_time">Preferred time</label>
                   <input id="mobile_preferred_time" name="mobile_preferred_time" type="time" step="900" min="08:00" max="16:00" value="08:00" />
-                  <p class="field-meta">Monday–Friday only, 15-minute increments, 8:00 AM–4:00 PM.</p>
+                  <p class="field-meta">Accepted times only: :00, :15, :30, or :45. Business hours are Monday–Friday, 8:00 AM–4:00 PM.</p>
                 </div>
                 <div class="form-field">
                   <label for="location_type">Location type</label>
@@ -522,7 +528,7 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('year').textContent = new Date().toISOString().slice(0,4);
 
     const serviceConfig = {
       in_person: {
@@ -555,7 +561,7 @@
         buttonText: 'Join Remote Notary Waitlist',
         summaryHeading: 'Remote online notary launch summary',
         ackCopy: 'I understand that Remote Online Notary service is not active yet and that this submission places me on the notification list only. No remote appointment is being booked at this time.',
-        autoResponse: 'Thank you for your interest in Remote Online Notary service. Tennessee approval is still in progress. We have added your information to the notification list and will follow up once remote service is available.',
+        autoResponse: 'Thank you for your interest in Remote Online Notary service. Tennessee approval is still in progress. We have added your information to the notification list and will follow up once remote service becomes available.',
         successCopy: 'Your Remote Online Notary interest request has been submitted successfully. We will notify you from notary.service@ralwyn.com when remote service becomes available.',
         estimateValue: 'RON coming soon',
         requestType: 'Remote Online Notary Waitlist',
@@ -676,8 +682,10 @@
       const parts = field.value.split(':');
       const hour = parseInt(parts[0], 10);
       const minute = parseInt(parts[1], 10);
-      if (minute % 15 !== 0) {
-        field.setCustomValidity('Please use 15-minute increments such as 08:15, 09:30, or 15:45.');
+      if (![0, 15, 30, 45].includes(minute)) {
+        field.setCustomValidity('Accepted times must end in :00, :15, :30, or :45.');
+        summaryAlert.hidden = false;
+        summaryAlert.textContent = 'Accepted times must end in :00, :15, :30, or :45.';
         return;
       }
       if (hour < 8 || hour > 16 || (hour === 16 && minute > 0)) {
@@ -793,7 +801,7 @@
 
       if (!notaryForm.reportValidity()) {
         formError.hidden = false;
-        formError.textContent = 'Please review the highlighted fields and correct any errors before submitting.';
+        formError.textContent = 'Please review the highlighted fields shown in red and correct any errors before submitting.';
         return;
       }
 
