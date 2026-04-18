@@ -34,3 +34,4 @@ This repo is suitable for a basic static deployment through Cloudflare Pages.
 - Current version is intentionally simple and lightweight.
 - Images/headshots can be added later in an `assets/` folder.
 - Additional pages like `about.html`, `services.html`, and `contact.html` can be added next.
+- Notary page is under active refactor planning to simplify layout while preserving booking logic.
