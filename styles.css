@@ -434,7 +434,7 @@ h3 {
   .bio-image {
     min-height: auto;
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 4.4;
   }
 
   .bio-copy {
