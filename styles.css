@@ -449,11 +449,26 @@ h3 {
     width: min(var(--max), calc(100% - 1.5rem));
   }
 
+  .header-inner {
+    gap: 0.8rem;
+    min-height: 70px;
+    padding: 0.4rem 0 0.55rem;
+  }
+
+  .site-nav {
+    gap: 0.9rem;
+    row-gap: 0.45rem;
+  }
+
+  .site-nav a {
+    font-size: 0.95rem;
+  }
+
   .hero,
   .page-hero,
   .section {
-    padding-top: 1.75rem;
-    padding-bottom: 1.75rem;
+    padding-top: 1.45rem;
+    padding-bottom: 1.6rem;
   }
 
   .section-header {
@@ -471,7 +486,7 @@ h3 {
   }
 
   .lead {
-    margin-top: 1rem;
+    margin-top: 0.85rem;
     font-size: 1rem;
   }
 
@@ -495,7 +510,7 @@ h3 {
   .hero-actions {
     flex-direction: column;
     gap: 0.75rem;
-    margin-top: 1.2rem;
+    margin-top: 1rem;
   }
 
   .button {
@@ -508,7 +523,7 @@ h3 {
   .eyebrow,
   .section-label,
   .contact-label {
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.6rem;
   }
 
   .footer-inner {
@@ -518,7 +533,7 @@ h3 {
   }
 
   .logo {
-    width: clamp(132px, 34vw, 180px);
+    width: clamp(118px, 30vw, 168px);
   }
 
   .site-header {
