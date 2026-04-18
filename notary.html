@@ -96,6 +96,16 @@
     .form-field textarea { min-height: 130px; resize: vertical; }
     .field-meta,
     .form-note { color: var(--muted); font-size: 0.92rem; }
+    .inline-alert {
+      margin-top: 0.45rem;
+      color: #dc2626;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+    .inline-alert a {
+      color: #fca5a5;
+      text-decoration: underline;
+    }
     .full-span { grid-column: 1 / -1; }
     .hidden-block { display: none; }
     .hidden-block.is-visible { display: block; }
@@ -424,6 +434,7 @@
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select>
+                  <p id="id-ready-alert" class="inline-alert hidden-block">Valid government-issued ID is required before notarization can be confirmed. Please review the <a href="faq.html">FAQ</a> for ID requirements.</p>
                 </div>
               </div>
             </div>
@@ -509,6 +520,7 @@
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select>
+                  <p id="mobile-id-ready-alert" class="inline-alert hidden-block">Valid government-issued ID is required before notarization can be confirmed. Please review the <a href="faq.html">FAQ</a> for ID requirements.</p>
                 </div>
               </div>
             </div>
@@ -673,6 +685,10 @@
     const premiumAddress = document.getElementById('premium_address');
     const premiumCity = document.getElementById('premium_city');
     const premiumZip = document.getElementById('premium_zip');
+    const idReady = document.getElementById('id_ready');
+    const mobileIdReady = document.getElementById('mobile_id_ready');
+    const idReadyAlert = document.getElementById('id-ready-alert');
+    const mobileIdReadyAlert = document.getElementById('mobile-id-ready-alert');
 
     const summaryStampFee = document.getElementById('summary-stamp-fee');
     const summaryLocationTier = document.getElementById('summary-location-tier');
@@ -769,6 +785,24 @@
       }
     }
 
+    function validateIdReady(field, alertEl) {
+      if (!field) return;
+      if (!field.value) {
+        field.setCustomValidity('');
+        if (alertEl) toggleVisible(alertEl.id, false);
+        return;
+      }
+      if (field.value === 'No') {
+        field.setCustomValidity('Valid government-issued ID is required before notarization can be confirmed.');
+        if (alertEl) toggleVisible(alertEl.id, true);
+        summaryAlert.hidden = false;
+        summaryAlert.innerHTML = 'Valid government-issued ID is required before notarization can be confirmed. Please review the <a href="faq.html">FAQ</a> for ID requirements.';
+        return;
+      }
+      field.setCustomValidity('');
+      if (alertEl) toggleVisible(alertEl.id, false);
+    }
+
     function updateInPersonSummary() {
       const stamps = Math.max(1, parseInt(stampCount.value || '1', 10));
       const stampFee = stamps * 25;
@@ -836,6 +870,8 @@
       if (mode === 'in_person') updateInPersonSummary();
       if (mode === 'mobile') updateMobileSummary();
       if (mode !== 'in_person') togglePremiumAddressFields(false);
+      validateIdReady(idReady, idReadyAlert);
+      validateIdReady(mobileIdReady, mobileIdReadyAlert);
     }
 
     cardInPerson.addEventListener('click', function(){ applyMode('in_person'); });
@@ -846,6 +882,8 @@
     stampCount.addEventListener('input', updateInPersonSummary);
     meetingLocation.addEventListener('change', updateInPersonSummary);
     mobileStampCount.addEventListener('input', updateMobileSummary);
+    idReady.addEventListener('change', function(){ validateIdReady(idReady, idReadyAlert); });
+    mobileIdReady.addEventListener('change', function(){ validateIdReady(mobileIdReady, mobileIdReadyAlert); });
 
     preferredDate.addEventListener('change', function(){ validateWeekdayDate(preferredDate, 'In-person appointments are available Monday through Friday only.'); });
     preferredTime.addEventListener('change', function(){ validateBusinessTime(preferredTime, 'In-person appointments must fall between 8:00 AM and 4:00 PM Monday through Friday.'); });
@@ -863,17 +901,19 @@
       if (state.current === 'in_person') {
         validateWeekdayDate(preferredDate, 'In-person appointments are available Monday through Friday only.');
         validateBusinessTime(preferredTime, 'In-person appointments must fall between 8:00 AM and 4:00 PM Monday through Friday.');
+        validateIdReady(idReady, idReadyAlert);
         updateInPersonSummary();
       }
       if (state.current === 'mobile') {
         validateWeekdayDate(mobilePreferredDate, 'Mobile appointments are available Monday through Friday only.');
         validateBusinessTime(mobilePreferredTime, 'Mobile appointments must fall between 8:00 AM and 4:00 PM Monday through Friday.');
+        validateIdReady(mobileIdReady, mobileIdReadyAlert);
         updateMobileSummary();
       }
 
       if (!notaryForm.reportValidity()) {
         formError.hidden = false;
-        formError.textContent = 'Please review the highlighted fields shown in red and correct any errors before submitting.';
+        formError.innerHTML = 'Please review the highlighted fields shown in red and correct any errors before submitting. If ID is not ready, please review the <a href="faq.html">FAQ</a> before requesting service.';
         return;
       }
 
