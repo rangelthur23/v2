@@ -314,6 +314,9 @@ h3 {
   overflow: hidden;
   align-items: stretch;
 }
+.bio-block.reverse {
+  grid-template-columns: 1fr minmax(240px, 360px);
+}
 
 .bio-block.reverse .bio-image {
   order: 2;
