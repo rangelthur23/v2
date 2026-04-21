@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disclaimer & Privacy | Ralwyn</title>
+  <meta name="description" content="Disclaimer, notary limitations, and privacy information for Ralwyn." />
+  <meta name="theme-color" content="#0f172a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; form-action 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand brand-logo-only" href="index.html" aria-label="Ralwyn home">
+        <img src="assets/UpdatedLogo.png" alt="Ralwyn logo" class="logo" />
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="notary.html">Notary</a>
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="eyebrow">Disclaimer & Privacy</p>
+        <h1 class="page-title">Important service and website information.</h1>
+        <p class="lead">This page explains the scope of Ralwyn’s services, notary limitations, and basic privacy practices.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow service-stack">
+        <article class="service-panel">
+          <p class="section-label">General advisory disclaimer</p>
+          <h2>Information only. Not professional advice.</h2>
+          <p>Ralwyn provides general consulting and advisory services for informational and educational purposes only. Nothing on this website or in any communication constitutes legal, financial, medical, or tax advice. Clients should consult licensed professionals for advice specific to their situation.</p>
+          <p>Use of this website or communication with Ralwyn does not establish a client relationship. A formal agreement must be executed before services begin.</p>
+          <p>Ralwyn makes no guarantees regarding outcomes. Services are based on general experience and best practices, and results may vary.</p>
+          <p>To the fullest extent permitted by law, Ralwyn shall not be liable for indirect, incidental, or consequential damages arising from the use of this website or services.</p>
+        </article>
+
+        <article class="service-panel">
+          <p class="section-label">Notary services</p>
+          <h2>Limited scope of notary work.</h2>
+          <p>Notary services are limited to verifying identity and witnessing signatures. Ralwyn does not provide legal advice, prepare legal documents, or interpret document contents.</p>
+        </article>
+
+        <article class="service-panel">
+          <p class="section-label">Privacy</p>
+          <h2>Limited collection for communication purposes.</h2>
+          <p>Ralwyn collects limited personal information submitted through contact forms solely for communication purposes. Information is not sold or shared with third parties except as required by law.</p>
+          <p>Form submissions may be processed through third-party tooling used to receive and manage inquiries. Do not submit sensitive personal, medical, financial, tax, or legal information through website forms unless specifically requested through a secure channel.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p>© <span id="year"></span> Ralwyn. All rights reserved.</p>
+        <p class="footer-note"><a href="disclaimer-privacy.html">Disclaimer & Privacy</a></p>
+      </div>
+      <p class="footer-note">Clarity. Structure. Progress.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
