@@ -131,9 +131,13 @@ h1,
   display: block;
 }
 
+.hero-headline-line:first-child {
+  margin-bottom: 0.18em;
+}
+
 .hero-headline-line.is-offset {
-  margin-left: 5.6rem;
-  margin-top: -0.18em;
+  margin-left: 4.9rem;
+  margin-top: 0;
 }
 
 .page-title {
@@ -502,9 +506,13 @@ h3 {
     font-size: 1rem;
   }
 
+  .hero-headline-line:first-child {
+    margin-bottom: 0.16em;
+  }
+
   .hero-headline-line.is-offset {
-    margin-left: 3.25rem;
-    margin-top: -0.08em;
+    margin-left: 2.95rem;
+    margin-top: 0;
   }
 
   .panel-card,
