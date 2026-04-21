@@ -132,7 +132,7 @@ h1,
 }
 
 .hero-headline-line:first-child {
-  margin-bottom: 0.18em;
+  margin-bottom: 0.36em;
 }
 
 .hero-headline-line.is-offset {
@@ -507,7 +507,7 @@ h3 {
   }
 
   .hero-headline-line:first-child {
-    margin-bottom: 0.16em;
+    margin-bottom: 0.32em;
   }
 
   .hero-headline-line.is-offset {
