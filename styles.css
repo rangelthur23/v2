@@ -127,6 +127,14 @@ h1,
   letter-spacing: -0.05em;
 }
 
+.hero-headline-line {
+  display: block;
+}
+
+.hero-headline-line.is-offset {
+  margin-left: 2.25rem;
+}
+
 .page-title {
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   line-height: 1.02;
@@ -491,6 +499,10 @@ h3 {
   .lead {
     margin-top: 0.85rem;
     font-size: 1rem;
+  }
+
+  .hero-headline-line.is-offset {
+    margin-left: 0.9rem;
   }
 
   .panel-card,
