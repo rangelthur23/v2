@@ -1,0 +1,4 @@
+Contact: mailto:contact@ralwyn.com
+Expires: 2027-04-22T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://ralwyn.com/.well-known/security.txt
