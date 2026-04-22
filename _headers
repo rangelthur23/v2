@@ -1,0 +1,11 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), gyroscope=(), accelerometer=(), magnetometer=(), interest-cohort=()
+
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8
+
+/security.txt
+  Content-Type: text/plain; charset=utf-8
