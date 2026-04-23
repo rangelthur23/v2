@@ -74,8 +74,10 @@ img {
 }
 
 .logo {
-  width: clamp(148px, 16vw, 220px);
-  height: auto;
+  display: block;
+  width: auto;
+  height: 64px;
+  max-width: 100%;
 }
 
 .site-nav {
@@ -632,6 +634,12 @@ h3 {
   margin-top: 1.5rem;
 }
 
+@media (min-width: 768px) {
+  .logo {
+    height: 76px;
+  }
+}
+
 @media (max-width: 980px) {
   .hero-grid,
   .cards,
@@ -806,7 +814,8 @@ h3 {
   }
 
   .logo {
-    width: clamp(118px, 30vw, 168px);
+    height: 52px;
+    width: auto;
   }
 
   .site-header {
