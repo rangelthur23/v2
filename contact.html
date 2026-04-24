@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Request Consultation | Ralwyn</title>
-  <meta name="description" content="Request consultation with Ralwyn for advisory, support, and problem-solving. Clear next steps and direct response.">
+  <meta name="description" content="Request consultation with Ralwyn for advisory, support, website implementation support, and problem-solving. Clear next steps and direct response." />
   <meta name="theme-color" content="#0f172a" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; form-action 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="canonical" href="https://ralwyn.com/contact.html" />
   <link rel="stylesheet" href="styles.css" />
@@ -15,10 +15,10 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand brand-logo-only" href="index.html">
+      <a class="brand brand-logo-only" href="index.html" aria-label="Ralwyn home">
         <img src="assets/ralwyn-logo-outlined-transparent.svg" alt="Ralwyn logo" class="logo" />
       </a>
-      <nav class="site-nav">
+      <nav class="site-nav" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="notary.html">Notary</a>
@@ -34,7 +34,11 @@
       <div class="container narrow">
         <p class="eyebrow">Consultation</p>
         <h1 class="page-title">Request consultation</h1>
-        <p class="lead">Tell us what you are working through. You will receive a direct response with practical next steps and recommended direction.</p>
+        <p class="lead">Use this form for advisory, operational support, website design and implementation support, and general problem-solving inquiries. Use the Notary page for Tennessee notary requests.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#services-inquiry-form">Request Consultation</a>
+          <a class="button button-secondary" href="notary.html#book-now">Request Notary Service</a>
+        </div>
       </div>
     </section>
 
@@ -46,7 +50,7 @@
           <ul class="plain-list">
             <li>Individuals who need clarity on a situation or next step</li>
             <li>Small businesses that need structure, support, or problem-solving</li>
-            <li>People working through competing priorities, process issues, or operational questions</li>
+            <li>Clients who need website planning, design cleanup, implementation support, or launch coordination</li>
           </ul>
         </article>
 
@@ -65,7 +69,7 @@
           <p class="section-label">What happens next</p>
           <h2>Direct, structured follow-up.</h2>
           <ul class="plain-list">
-            <li>Your message is reviewed</li>
+            <li>Your inquiry is reviewed</li>
             <li>You receive a direct response with clear next steps</li>
             <li>If appropriate, a recommended path forward is provided</li>
           </ul>
@@ -73,21 +77,100 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="services-inquiry-form">
+      <div class="container narrow">
+        <p class="section-label">Services inquiry</p>
+        <h2>Use the form for advisory and support.</h2>
+        <p class="lead">This form is for consultation and service inquiries only. Tennessee notary requests should be submitted through the dedicated Notary page.</p>
+
+        <div class="form-shell mt-100">
+          <form action="https://formspree.io/f/mnjldobl" method="POST">
+            <input type="hidden" name="service" value="Consultation Request" />
+            <input type="hidden" name="service_request_type" value="General Services Inquiry" />
+            <input type="hidden" name="_subject" value="Ralwyn Services Inquiry" />
+            <input type="hidden" name="_autoresponse" value="Thank you for your consultation inquiry. Your message has been received and will be reviewed. Ralwyn will follow up with next steps as appropriate." />
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="first_name">First name</label>
+                <input id="first_name" name="first_name" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="last_name">Last name</label>
+                <input id="last_name" name="last_name" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="form-field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" type="tel" required />
+              </div>
+              <div class="form-field full-span">
+                <label for="service_needed">What are you looking for help with?</label>
+                <select id="service_needed" name="service_needed" required>
+                  <option value="">Select one</option>
+                  <option value="Advisory / Consulting">Advisory / Consulting</option>
+                  <option value="Operational Support">Operational Support</option>
+                  <option value="Website Design and Implementation Support">Website Design and Implementation Support</option>
+                  <option value="Problem-Solving">Problem-Solving</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-field full-span">
+                <label for="brief_description">Brief description</label>
+                <textarea id="brief_description" name="brief_description" required></textarea>
+              </div>
+              <div class="form-field full-span">
+                <label for="desired_outcome">Desired outcome or goal</label>
+                <textarea id="desired_outcome" name="desired_outcome"></textarea>
+              </div>
+              <div class="form-field">
+                <label for="timeline">Timeline or urgency</label>
+                <select id="timeline" name="timeline">
+                  <option value="">Select one</option>
+                  <option value="As soon as possible">As soon as possible</option>
+                  <option value="Within 1 week">Within 1 week</option>
+                  <option value="Within 30 days">Within 30 days</option>
+                  <option value="Future / planning stage">Future / planning stage</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="preferred_follow_up">Preferred follow-up method</label>
+                <select id="preferred_follow_up" name="preferred_follow_up">
+                  <option value="">Select one</option>
+                  <option value="Email">Email</option>
+                  <option value="Phone">Phone</option>
+                  <option value="Either">Either</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="notice-box mt-100">
+              <p class="form-note">Submitting this form requests general consultation only. No client relationship is created by submitting this inquiry. Ralwyn provides general advisory services only and does not provide legal, financial, medical, or tax advice.</p>
+            </div>
+
+            <div class="hero-actions mt-100">
+              <button class="button button-primary" type="submit">Submit Services Inquiry</button>
+              <a class="button button-secondary" href="notary.html#book-now">Go to Notary Request</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
       <div class="container contact-panel">
         <div>
-          <p class="section-label">How to start</p>
-          <h2>Direct, structured communication.</h2>
-          <p>
-            Use email to describe your situation, goal, or problem. Keep it concise, clear, and practical. You will receive a direct response with recommended next steps.
-          </p>
-          <p class="contact-note">Typical response includes clarification, structured next steps, and a recommended direction for moving forward.</p>
+          <p class="section-label">Need notary instead?</p>
+          <h2>Notary requests stay separate.</h2>
+          <p>Use the dedicated Notary page for in-person, mobile, and future Remote Online Notary requests. That keeps service lines and intake details clear.</p>
         </div>
         <div class="contact-card">
-          <p class="contact-label">Primary contact</p>
-          <a class="contact-link" href="mailto:contact@ralwyn.com">contact@ralwyn.com</a>
-          <p class="contact-note">No spam. No pressure. Direct response with next steps.</p>
-          <p class="contact-note">General information only. No legal, financial, medical, or tax advice. <a href="disclaimer-privacy.html">Read Disclaimer & Privacy</a>.</p>
+          <p class="contact-label">Notary service</p>
+          <a class="contact-link" href="notary.html#book-now">Request Notary Service</a>
+          <p class="contact-note">Use the notary form for Tennessee notary appointments. Use this consultation form for advisory and support only.</p>
         </div>
       </div>
     </section>
