@@ -698,9 +698,9 @@ team-grid {
   }
 
   .header-inner {
-    gap: 0.8rem;
+    gap: 1rem;
     min-height: 70px;
-    padding: 0.4rem 0 0.55rem;
+    padding: 0.8rem 0 0.85rem;
   }
 
   .site-nav {
