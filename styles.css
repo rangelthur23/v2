@@ -301,7 +301,7 @@ h3 {
   gap: 1.25rem;
 }
 
-.team-grid {
+team-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -848,8 +848,20 @@ h3 {
     min-height: 110px;
   }
 
-  .field-meta,
   .form-note,
+  .contact-note {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .service-panel p,
+  .contact-card p,
+  .notice-box p {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .field-meta,
   .inline-alert {
     font-size: 0.9rem;
   }
