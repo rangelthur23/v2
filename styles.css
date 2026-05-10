@@ -321,6 +321,7 @@ team-grid {
   width: 100%;
   aspect-ratio: 4 / 3.5;
   object-fit: cover;
+  object-position: center 18%;
 }
 
 .profile-copy {
@@ -354,6 +355,7 @@ team-grid {
   height: 100%;
   min-height: 320px;
   object-fit: cover;
+  object-position: center 18%;
   position: relative;
   z-index: 1;
 }
@@ -780,6 +782,7 @@ team-grid {
     min-height: auto;
     height: auto;
     aspect-ratio: 4 / 4.4;
+    object-position: center 16%;
   }
 
   .bio-copy {
@@ -980,6 +983,10 @@ team-grid {
     margin-top: 0.85rem;
   }
 
+  .profile-image {
+    object-position: center 16%;
+  }
+
   /* RALWYN PROCESS SECTION START */
   .ralwyn-process-section {
     padding-top: 1rem;
@@ -1030,6 +1037,14 @@ team-grid {
   .summary-total {
     margin-top: 0.6rem;
     padding-top: 0.6rem;
+  }
+
+  .profile-image {
+    object-position: center 14%;
+  }
+
+  .bio-image {
+    object-position: center 14%;
   }
 
   /* RALWYN PROCESS SECTION START */
